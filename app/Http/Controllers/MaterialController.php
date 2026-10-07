@@ -42,7 +42,8 @@ class MaterialController extends Controller
             foreach ($subjectsWithPdf as $s) {
                 $materials[] = [
                     'id'          => 'subject_' . $s->id,
-                    'title'       => $s->subject_name . ' - Class Material',
+                    'title'       => $s->topic ? $s->topic : ($s->subject_name . ' - Class Material'),
+                    'topic'       => $s->topic,
                     'description' => 'Class Study Material',
                     'type'        => 'pdf',
                     'file_url'    => $s->pdf,

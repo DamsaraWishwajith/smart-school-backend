@@ -24,32 +24,83 @@ class ExamResultController extends Controller
         $query = ExamResult::with(['student.user', 'subject']);
 
         $user = auth()->user();
-        if ($user && $user->role === 'teacher' && !$request->has('all')) {
+        if ($user && $user->role === 'teacher') {
             $teacher = \App\Models\Teacher::where('user_id', $user->id)->first();
             if ($teacher) {
                 $grades = \App\Models\Grade::where('class_teacher_id', $teacher->id)->get();
-                if ($grades->isNotEmpty()) {
-                    $query->whereHas('student', function ($q) use ($grades) {
-                        $q->where(function ($sq) use ($grades) {
-                            foreach ($grades as $idx => $g) {
-                                $rawGrade = trim(str_ireplace('Grade ', '', $g->name));
-                                if ($idx === 0) {
-                                    $sq->where(function($q1) use ($rawGrade, $g) {
-                                        $q1->where('grade', $rawGrade)
-                                           ->orWhere('grade', $g->name);
-                                    });
-                                } else {
-                                    $sq->orWhere(function ($ssq) use ($rawGrade, $g) {
-                                        $ssq->where(function($q1) use ($rawGrade, $g) {
-                                            $q1->where('grade', $rawGrade)
-                                               ->orWhere('grade', $g->name);
-                                        });
-                                    });
-                                }
+                $teacherSubjectIds = \App\Models\Subject::where('teacher_id', $teacher->id)
+                    ->orWhere('teacher_id', $user->id)
+                    ->pluck('id')
+                    ->toArray();
+
+                // Check SimpleTimetable for subjects/grades assigned to teacher
+                $teacherTimetables = \App\Models\SimpleTimetable::where('grade', 'like', "%teacher:{$user->id}%")
+                    ->orWhere('grade', 'like', "%teacher:{$teacher->id}%")
+                    ->get();
+                $slots = [
+                    't_8_00_8_30','t_8_30_9_00','t_9_00_9_30','t_9_30_10_00',
+                    't_10_00_10_30','t_10_30_11_00','t_11_00_11_30','t_11_30_12_00',
+                    't_12_00_12_30','t_12_30_1_00','t_1_00_1_30'
+                ];
+                $timetableSubjectNames = [];
+                foreach ($teacherTimetables as $tt) {
+                    foreach ($slots as $slot) {
+                        $val = trim($tt->$slot ?? '');
+                        if ($val) {
+                            $subName = trim(preg_replace('/\s*\([^)]+\)/', '', explode('-', $val)[0]));
+                            if ($subName) {
+                                $timetableSubjectNames[] = strtolower($subName);
                             }
-                        });
-                    });
+                        }
+                    }
                 }
+                if (!empty($timetableSubjectNames)) {
+                    $ttSubjectIds = \App\Models\Subject::where(function($sq) use ($timetableSubjectNames) {
+                        foreach (array_unique($timetableSubjectNames) as $s) {
+                            $sq->orWhere('subject_name', 'like', "%{$s}%");
+                        }
+                    })->pluck('id')->toArray();
+                    $teacherSubjectIds = array_unique(array_merge($teacherSubjectIds, $ttSubjectIds));
+                }
+
+                if (!empty($teacher->subject_specialization)) {
+                    $specs = array_map('trim', explode(',', $teacher->subject_specialization));
+                    $specSubjectIds = \App\Models\Subject::where(function($sq) use ($specs) {
+                        foreach ($specs as $s) {
+                            $sq->orWhere('subject_name', 'like', "%{$s}%");
+                        }
+                    })->pluck('id')->toArray();
+                    $teacherSubjectIds = array_unique(array_merge($teacherSubjectIds, $specSubjectIds));
+                }
+
+                $query->where(function ($q) use ($grades, $teacherSubjectIds) {
+                    $hasCond = false;
+                    if ($grades->isNotEmpty()) {
+                        $q->whereHas('student', function ($sq) use ($grades) {
+                            $sq->where(function ($ssq) use ($grades) {
+                                foreach ($grades as $g) {
+                                    $rawGrade = trim(str_ireplace('Grade ', '', $g->name));
+                                    $ssq->orWhere('grade', $rawGrade)
+                                        ->orWhere('grade', $g->name);
+                                }
+                            });
+                        });
+                        $hasCond = true;
+                    }
+
+                    if (!empty($teacherSubjectIds)) {
+                        if ($hasCond) {
+                            $q->orWhereIn('subject_id', $teacherSubjectIds);
+                        } else {
+                            $q->whereIn('subject_id', $teacherSubjectIds);
+                        }
+                        $hasCond = true;
+                    }
+
+                    if (!$hasCond) {
+                        $q->whereRaw('1 = 0');
+                    }
+                });
             }
         }
 

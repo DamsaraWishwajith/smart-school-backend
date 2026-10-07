@@ -76,7 +76,9 @@ class AdminController extends Controller
             if ($user && $user->role === 'teacher') {
                 $teacher = \App\Models\Teacher::where('user_id', $user->id)->first();
                 if ($teacher) {
-                    $grades = \App\Models\Grade::where('class_teacher_id', $teacher->id)->get();
+                    $grades = \App\Models\Grade::where('class_teacher_id', $teacher->id)
+                        ->orWhere('class_teacher_id', $user->id)
+                        ->get();
                     if ($grades->isEmpty()) {
                         return response()->json([
                             'success' => true,
@@ -91,18 +93,24 @@ class AdminController extends Controller
                                 // Extract raw grade number/name without 'Grade ' prefix
                                 $rawGrade = trim(str_ireplace('Grade ', '', $g->name));
 
-                                if ($idx === 0) {
-                                    $sq->where(function($q1) use ($rawGrade, $g) {
-                                        $q1->where('grade', $rawGrade)
+                                $cond = function($q1) use ($rawGrade, $g) {
+                                    $q1->where(function($gq) use ($rawGrade, $g) {
+                                        $gq->where('grade', $rawGrade)
                                            ->orWhere('grade', $g->name);
-                                    })->where('class', $g->section);
-                                } else {
-                                    $sq->orWhere(function ($ssq) use ($rawGrade, $g) {
-                                        $ssq->where(function($q1) use ($rawGrade, $g) {
-                                            $q1->where('grade', $rawGrade)
-                                               ->orWhere('grade', $g->name);
-                                        })->where('class', $g->section);
                                     });
+                                    if (!empty($g->section)) {
+                                        $q1->where(function($sqClass) use ($g) {
+                                            $sqClass->where('class', $g->section)
+                                                    ->orWhereNull('class')
+                                                    ->orWhere('class', '');
+                                        });
+                                    }
+                                };
+
+                                if ($idx === 0) {
+                                    $sq->where($cond);
+                                } else {
+                                    $sq->orWhere($cond);
                                 }
                             }
                         });
@@ -113,8 +121,13 @@ class AdminController extends Controller
             // Filter by grade if provided (students only)
             if ($request->filled('grade')) {
                 $gradeFilter = $request->grade;
-                $query->whereHas('user.student', function ($q) use ($gradeFilter) {
-                    $q->where('grade', $gradeFilter);
+                $rawGrade = trim(str_ireplace('Grade ', '', $gradeFilter));
+                $query->whereHas('user.student', function ($q) use ($gradeFilter, $rawGrade) {
+                    $q->where(function($gq) use ($gradeFilter, $rawGrade) {
+                        $gq->where('grade', $gradeFilter)
+                           ->orWhere('grade', $rawGrade)
+                           ->orWhere('grade', 'Grade ' . $rawGrade);
+                    });
                 });
                 // Only return student attendance when filtering by grade
                 $query->whereHas('user', function ($q) {
@@ -287,7 +300,7 @@ class AdminController extends Controller
                     'user_id'      => $user->id,
                     'student_id'   => 'STU' . str_pad($user->id, 5, '0', STR_PAD_LEFT),
                     'grade'        => $request->grade ?? '1',
-                    'class'        => $request->class ?? 'A',
+                    'class'        => $request->class ?? null,
                     'parent_name'  => $request->parent_name,
                     'parent_email' => $request->parent_email,
                     'parent_phone' => $request->parent_phone,

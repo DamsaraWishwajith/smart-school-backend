@@ -12,6 +12,7 @@ class Subject extends Model
     protected $fillable = [
         'grade',
         'subject_name',
+        'topic',
         'pdf',
         'assignment',
         'due_time',

@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- html2pdf.js local bundle for reliable PDF generation -->
+    <script src="/js/html2pdf.bundle.min.js"></script>
     
     <style>
         /* Base Styling */
@@ -1225,7 +1227,7 @@
                 <li data-roles="teacher">
                     <a class="menu-item" data-view="teacher-submissions">
                         <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-                        Student Submissions
+                        Student Assignment Submissions
                     </a>
                 </li>
                 <li data-roles="admin,teacher">
@@ -1240,10 +1242,16 @@
                         My Class Results
                     </a>
                 </li>
-                <li data-roles="admin,teacher">
+                <li data-roles="admin">
                     <a class="menu-item" data-view="class-rankings">
                         <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                         Class Rankings
+                    </a>
+                </li>
+                <li data-roles="admin,teacher">
+                    <a class="menu-item" data-view="ai-performance">
+                        <svg viewBox="0 0 24 24"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>
+                        AI Performance
                     </a>
                 </li>
                 <li data-roles="admin,teacher">
@@ -1402,7 +1410,7 @@
             <!-- VIEW 2: USERS DIRECTORY -->
             <div id="view-users" class="view-panel hidden">
                 <div class="view-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                    <h2>Users Directory</h2>
+                    <h2></h2>
                     <div style="display:flex; gap:10px; flex-wrap:wrap;">
                         <button onclick="openCreateUserModal('student')" style="width:auto; padding:10px 16px; font-weight:600; font-size:13px; background:#4CAF50; border:none; border-radius:8px; color:white; cursor:pointer; display:flex; align-items:center; gap:6px;">
                             <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
@@ -1503,7 +1511,7 @@
             <!-- VIEW: GRADES MANAGEMENT -->
             <div id="view-grades" class="view-panel hidden">
                 <div class="view-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                    <h2>Grades Management</h2>
+                    <h2></h2>
                 </div>
                 <div class="controls-panel">
                     <div class="search-wrapper" style="flex:1;">
@@ -1609,18 +1617,6 @@
                             <!-- Grade Filter Dropdown -->
                             <select id="attendance-grade-filter" onchange="applyAttendanceGradeFilter()" style="padding: 10px 14px; border: 1.5px solid #d1d9e0; border-radius: 8px; font-size: 13px; font-weight: 600; font-family: inherit; background: white; color: #1a1f36; cursor: pointer; outline: none; transition: border-color 0.2s;">
                                 <option value="">All Grades</option>
-                                <option value="1">Grade 1</option>
-                                <option value="2">Grade 2</option>
-                                <option value="3">Grade 3</option>
-                                <option value="4">Grade 4</option>
-                                <option value="5">Grade 5</option>
-                                <option value="6">Grade 6</option>
-                                <option value="7">Grade 7</option>
-                                <option value="8">Grade 8</option>
-                                <option value="9">Grade 9</option>
-                                <option value="10">Grade 10</option>
-                                <option value="11">Grade 11</option>
-                                <option value="12">Grade 12</option>
                             </select>
                             <button class="btn-toggle-fee pay" onclick="exportStudentAttendanceCSV()" style="width: auto; padding: 10px 15px; font-weight: 600; font-size: 13px; background: #4CAF50; border: none; border-radius: 8px; color:white; cursor:pointer;">
                                 Export CSV
@@ -1834,7 +1830,7 @@
             <!-- VIEW: FEES & PAYMENTS -->
             <div id="view-fees" class="view-panel hidden">
                 <div class="view-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                    <h2>Fees & Payments</h2>
+                    <h2></h2>
                 </div>
 
                 <!-- TABS CONTAINER -->
@@ -2239,8 +2235,8 @@
             <div id="view-gallery" class="view-panel hidden">
                 <div class="view-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
                     <div>
-                        <h2 style="margin:0; font-size:22px; font-weight:800; color:#1a1f36;">Event Photo Gallery</h2>
-                        <p style="margin:4px 0 0 0; font-size:13px; color:#697386;">Organize and upload multi-photo event albums for school activities.</p>
+                        <h2 style="margin:0; font-size:22px; font-weight:800; color:#1a1f36;"></h2>
+                        <p style="margin:4px 0 0 0; font-size:13px; color:#697386;"></p>
                     </div>
                     <button class="btn btn-primary" onclick="openAddGalleryModal()" style="width: auto; margin-top: 0; padding: 12px 24px; font-size: 14px; font-weight:700; background: linear-gradient(135deg, #0077be, #005c99); border:none; border-radius:10px; color:white; cursor:pointer; display:flex; align-items:center; gap:8px; box-shadow: 0 4px 14px rgba(0,119,190,0.3);">
                         <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
@@ -2464,14 +2460,27 @@
                     </button>
                 </div>
 
-                <!-- Materials pane -->
-                <div id="admin-content-materials-pane">
-                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
-                        <div class="search-wrapper" style="flex:1; max-width:320px; margin:0;">
-                            <svg class="search-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                            <input type="text" id="admin-materials-search" class="search-input" placeholder="Search teacher, subject or type..." oninput="renderAdminMaterials()">
-                        </div>
-                        <select id="admin-materials-type" class="filter-select" style="height:40px;" onchange="renderAdminMaterials()">
+                <!-- Filters panel -->
+                <div class="controls-panel" style="display:flex; gap:12px; margin-bottom:18px; align-items:center; flex-wrap:wrap; background:rgba(255,255,255,0.6); padding:12px 16px; border-radius:12px; border:1px solid rgba(255,255,255,0.4);">
+                    <div class="search-wrapper" style="flex:1; min-width:200px; margin:0;">
+                        <svg class="search-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 14z"/></svg>
+                        <input type="text" id="admin-content-search" class="search-input" placeholder="Search teacher, subject, title..." oninput="filterAdminContent()">
+                    </div>
+
+                    <select id="admin-content-filter-grade" class="search-input" style="width:160px; padding:0 12px; background:white; border:1px solid rgba(0,0,0,0.1); border-radius:8px; height:40px;" onchange="filterAdminContent()">
+                        <option value="">All Grades</option>
+                    </select>
+
+                    <select id="admin-content-filter-subject" class="search-input" style="width:180px; padding:0 12px; background:white; border:1px solid rgba(0,0,0,0.1); border-radius:8px; height:40px;" onchange="filterAdminContent()">
+                        <option value="">All Subjects</option>
+                    </select>
+
+                    <select id="admin-content-filter-teacher" class="search-input" style="width:180px; padding:0 12px; background:white; border:1px solid rgba(0,0,0,0.1); border-radius:8px; height:40px;" onchange="filterAdminContent()">
+                        <option value="">All Teachers</option>
+                    </select>
+
+                    <div id="admin-content-type-wrapper" style="display:inline-block;">
+                        <select id="admin-materials-type" class="search-input" style="width:140px; padding:0 12px; background:white; border:1px solid rgba(0,0,0,0.1); border-radius:8px; height:40px;" onchange="filterAdminContent()">
                             <option value="">All Types</option>
                             <option value="pdf">PDF</option>
                             <option value="video">Video</option>
@@ -2479,6 +2488,10 @@
                             <option value="assignment">Assignment</option>
                         </select>
                     </div>
+                </div>
+
+                <!-- Materials pane -->
+                <div id="admin-content-materials-pane">
                     <div class="glass-card" style="padding:10px; overflow:hidden;">
                         <div class="table-responsive">
                             <table class="data-table">
@@ -2487,14 +2500,15 @@
                                         <th>Teacher</th>
                                         <th>Subject</th>
                                         <th>Grade</th>
-                                        <th>Title</th>
+                                        <th>Topic Name</th>
                                         <th>Type</th>
                                         <th>Uploaded</th>
                                         <th>File</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="admin-materials-table-body">
-                                    <tr><td colspan="7" style="text-align:center;color:#697386;padding:30px;">Loading...</td></tr>
+                                    <tr><td colspan="8" style="text-align:center;color:#697386;padding:30px;">Loading...</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -2503,12 +2517,6 @@
 
                 <!-- Assignments pane -->
                 <div id="admin-content-assignments-pane" style="display:none;">
-                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
-                        <div class="search-wrapper" style="flex:1; max-width:320px; margin:0;">
-                            <svg class="search-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                            <input type="text" id="admin-assignments-search" class="search-input" placeholder="Search teacher or subject..." oninput="renderAdminAssignments()">
-                        </div>
-                    </div>
                     <div class="glass-card" style="padding:10px; overflow:hidden;">
                         <div class="table-responsive">
                             <table class="data-table">
@@ -2522,10 +2530,11 @@
                                         <th>Total Marks</th>
                                         <th>Uploaded</th>
                                         <th>File</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="admin-assignments-table-body">
-                                    <tr><td colspan="8" style="text-align:center;color:#697386;padding:30px;">Loading...</td></tr>
+                                    <tr><td colspan="9" style="text-align:center;color:#697386;padding:30px;">Loading...</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -2699,7 +2708,7 @@
                 </div>
             </div>
 
-            <!-- VIEW: STUDENT SUBMISSIONS -->
+            <!-- VIEW: STUDENT ASSIGNMENT SUBMISSIONS -->
             <div id="view-teacher-submissions" class="view-panel hidden">
                 <div class="controls-panel" style="display:flex; gap:15px; margin-bottom:20px; align-items:center; background: rgba(255,255,255,0.5); padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.3);">
                     <div class="search-wrapper" style="flex:1; min-width:200px;">
@@ -2728,7 +2737,7 @@
                             </thead>
                             <tbody id="teacher-submissions-table-body">
                                 <tr>
-                                    <td colspan="7" style="text-align: center; color: #697386; padding: 30px;">Loading student submissions...</td>
+                                    <td colspan="8" style="text-align: center; color: #697386; padding: 30px;">Loading student submissions...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -2791,12 +2800,6 @@
                     </div>
                 </div>
 
-                <!-- Tab selectors -->
-                <div style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.08); padding-bottom: 10px;">
-                    <button id="exam-tab-records" class="pill active" onclick="switchExamTab('records')" style="border-radius: 8px; padding: 8px 16px;">All Records</button>
-                    <button id="exam-tab-studentwise" class="pill" onclick="switchExamTab('studentwise')" style="border-radius: 8px; padding: 8px 16px;">Student-wise Reports</button>
-                </div>
-                
                 <div id="exam-records-section">
                     <div class="controls-panel" style="display:flex; gap:15px; margin-bottom:20px; align-items:center; background: rgba(255,255,255,0.5); padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.3);">
                         <div class="search-wrapper" style="flex:1; min-width:200px;">
@@ -2852,18 +2855,12 @@
                         </div>
                     </div>
                 </div>
-
-                <div id="exam-studentwise-section" class="hidden">
-                    <div id="exam-studentwise-container">
-                        <!-- Grouped results cards will be rendered here dynamically -->
-                    </div>
-                </div>
             </div>
 
             <!-- VIEW: CLASS RANKINGS -->
             <div id="view-class-rankings" class="view-panel hidden">
                 <div class="view-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                    <h2>Class Rankings</h2>
+                    <h2></h2>
                     <div style="display:flex; gap:10px;">
                         <button class="btn-toggle-fee pay" onclick="printClassRankingsPDF()" style="width: auto; padding: 10px 15px; font-weight: 600; font-size: 13px; background: #0077be; border: none; border-radius: 8px; color:white; cursor:pointer;">
                             Print / PDF Report
@@ -2915,12 +2912,114 @@
                 </div>
             </div>
 
+            <!-- VIEW: AI PERFORMANCE INSIGHTS -->
+            <div id="view-ai-performance" class="view-panel hidden">
+                <div class="view-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
+                    <div>
+                        <h2 style="display:flex; align-items:center; gap:10px; margin:0;">
+                            <span style="display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%); color:white;">
+                                <svg style="width:20px; height:20px; fill:currentColor;" viewBox="0 0 24 24"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>
+                            </span>
+                            AI Performance Insights
+                        </h2>
+                        <p style="margin:4px 0 0 0; font-size:13px; color:#697386;">Student academic performance analysis, strengths, weaknesses and progress evaluation powered by Smart School AI</p>
+                    </div>
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <button id="ai-perf-download-btn" class="btn-toggle-fee pay hidden" onclick="downloadAiPerformancePdf()" style="width: auto; padding: 10px 16px; font-weight: 600; font-size: 13px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border: none; border-radius: 8px; color:white; cursor:pointer; display:inline-flex; align-items:center; gap:6px; box-shadow: 0 4px 10px rgba(99,102,241,0.25);">
+                            <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                            Download PDF
+                        </button>
+                        <button id="ai-perf-print-btn" class="btn-toggle-fee pay hidden" onclick="printAiPerformanceReport()" style="width: auto; padding: 10px 16px; font-weight: 600; font-size: 13px; background: #0077be; border: none; border-radius: 8px; color:white; cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
+                            <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+                            Print Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CONTROLS & FILTERS -->
+                <div class="glass-card" style="padding:16px 20px; margin-bottom:20px; background:rgba(255,255,255,0.7); border-radius:12px; border:1px solid rgba(255,255,255,0.4); box-shadow:0 4px 15px rgba(0,0,0,0.03);">
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto; gap:15px; align-items:end;">
+                        <!-- Grade Filter -->
+                        <div>
+                            <label style="display:block; font-size:12px; font-weight:700; color:#475569; margin-bottom:6px;">Grade / Class</label>
+                            <select id="ai-perf-grade" class="search-input" style="width:100%; padding:0 12px; background:white; border:1.5px solid #d1d9e0; border-radius:8px; height:42px; font-size:13px; font-weight:600;" onchange="onAiPerfGradeChanged()">
+                                <option value="">Select Grade</option>
+                            </select>
+                        </div>
+
+                        <!-- Student Name Filter (Dynamically populated by grade) -->
+                        <div>
+                            <label style="display:block; font-size:12px; font-weight:700; color:#475569; margin-bottom:6px;">Student Name</label>
+                            <select id="ai-perf-student" class="search-input" style="width:100%; padding:0 12px; background:white; border:1.5px solid #d1d9e0; border-radius:8px; height:42px; font-size:13px; font-weight:600;" disabled onchange="onAiPerfStudentChanged()">
+                                <option value="">Select Student</option>
+                            </select>
+                        </div>
+
+                        <!-- Year Filter -->
+                        <div>
+                            <label style="display:block; font-size:12px; font-weight:700; color:#475569; margin-bottom:6px;">Academic Year</label>
+                            <select id="ai-perf-year" class="search-input" style="width:100%; padding:0 12px; background:white; border:1.5px solid #d1d9e0; border-radius:8px; height:42px; font-size:13px; font-weight:600;" onchange="onAiPerfFiltersChanged()">
+                                <option value="2026">2026</option>
+                                <option value="2025">2025</option>
+                                <option value="2024">2024</option>
+                            </select>
+                        </div>
+
+                        <!-- Term Filter (Optional) -->
+                        <div>
+                            <label style="display:block; font-size:12px; font-weight:700; color:#475569; margin-bottom:6px;">Term (Optional)</label>
+                            <select id="ai-perf-term" class="search-input" style="width:100%; padding:0 12px; background:white; border:1.5px solid #d1d9e0; border-radius:8px; height:42px; font-size:13px; font-weight:600;" onchange="onAiPerfFiltersChanged()">
+                                <option value="All Terms">All Terms (Cumulative)</option>
+                                <option value="Term 1">Term 1</option>
+                                <option value="Term 2">Term 2</option>
+                                <option value="Term 3">Term 3</option>
+                            </select>
+                        </div>
+
+                        <!-- Generate Button -->
+                        <div>
+                            <button id="ai-perf-generate-btn" class="btn-toggle-fee pay" onclick="triggerGenerateAiReport()" style="width: 100%; height:42px; padding: 0 20px; font-weight: 700; font-size: 13px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%); border: none; border-radius: 8px; color:white; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 12px rgba(99,102,241,0.3); transition:all 0.25s ease;" disabled>
+                                <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>
+                                <span>Generate Report</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REPORT AREA (Empty by default) -->
+                <div id="ai-perf-report-container">
+                    <div id="ai-perf-empty-state" class="glass-card" style="text-align: center; padding: 60px 20px; background: rgba(255,255,255,0.6); border-radius: 16px; border: 1.5px dashed #cbd5e1;">
+                        <div style="width: 72px; height: 72px; margin: 0 auto 16px auto; border-radius: 50%; background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(217,70,239,0.15)); display: flex; align-items: center; justify-content: center; font-size: 32px;">
+                            ✨
+                        </div>
+                        <h3 style="color: #1e293b; font-size: 18px; margin: 0 0 8px 0; font-weight: 700;">AI Academic Performance Insight</h3>
+                        <p style="color: #64748b; font-size: 14px; max-width: 480px; margin: 0 auto 15px auto; line-height: 1.5;">
+                            Select a Grade and Student from the filters above to view or generate an AI-powered academic performance analysis.
+                        </p>
+                        <span style="display:inline-block; font-size:12px; font-weight:600; color:#8b5cf6; background:rgba(139,92,246,0.1); padding:4px 12px; border-radius:20px;">
+                            Powered by Smart School AI
+                        </span>
+                    </div>
+
+                    <div id="ai-perf-loading-state" class="glass-card hidden" style="text-align: center; padding: 60px 20px; background: rgba(255,255,255,0.8); border-radius: 16px;">
+                        <div class="spinner" style="width: 44px; height: 44px; margin: 0 auto 16px auto; border-width: 4px; border-color: #e2e8f0; border-top-color: #8b5cf6; border-radius:50%; animation: spin 1s linear infinite;"></div>
+                        <h3 style="color: #1e293b; font-size: 17px; margin: 0 0 6px 0; font-weight: 700;">Analyzing Student Academic Data...</h3>
+                        <p style="color: #64748b; font-size: 13px; margin: 0;">Exam results and assignment records are being evaluated with Smart School AI.</p>
+                    </div>
+
+                    <!-- ACTIVE REPORT VIEW -->
+                    <div id="ai-perf-content-state" class="hidden">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
     <!-- VIEW: TEACHER CLASS RESULTS (MY CLASS ALL SUBJECT RESULTS) -->
     <div id="view-teacher-class-results" class="view-panel hidden">
         <div class="view-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
             <div>
-                <h2 style="margin:0; font-size:20px; color:#1a1f36;">My Class Student Results</h2>
-                <p style="margin:4px 0 0 0; color:#697386; font-size:13px;">View all subject marks, total scores, averages, and ranks for students in your assigned class</p>
+                <h2 style="margin:0; font-size:20px; color:#1a1f36;"></h2>
+                <p style="margin:4px 0 0 0; color:#697386; font-size:13px;"></p>
             </div>
             <div style="display:flex; gap:10px;">
                 <button class="btn-toggle-fee pay" onclick="printTeacherClassResultsPDF()" style="width: auto; padding: 10px 15px; font-weight: 600; font-size: 13px; background: #0077be; border: none; border-radius: 8px; color:white; cursor:pointer;">
@@ -3004,14 +3103,16 @@
                                 <tr>
                                     <th>Target Grade</th>
                                     <th>Subject Name</th>
+                                    <th>Topic Name</th>
                                     <th>Material (PDF)</th>
                                     <th>Assignment</th>
                                     <th>Created At</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="teacher-uploaded-table-body">
                                 <tr>
-                                    <td colspan="5" style="text-align: center; color: #697386; padding: 30px;">Loading your materials...</td>
+                                    <td colspan="7" style="text-align: center; color: #697386; padding: 30px;">Loading your materials...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -3679,7 +3780,7 @@
                         <h4 style="margin-bottom: 12px; color: #1a1a1a;">Student Details</h4>
                         <div style="margin-bottom: 14px;">
                             <label style="display:block; font-size:12px; font-weight:600; color:#697386; margin-bottom:6px;">Grade</label>
-                            <select id="student-grade" class="search-input" style="border:1px solid rgba(0,0,0,0.15); background:white; height: 40px; padding: 0 10px;">
+                            <select id="student-grade" class="search-input" style="border:1px solid rgba(0,0,0,0.15); background:white; height: 40px; padding: 0 10px; width: 100%;">
                                 <option value="1">Grade 1</option>
                                 <option value="2">Grade 2</option>
                                 <option value="3">Grade 3</option>
@@ -3736,6 +3837,168 @@
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW STUDENT DETAILS MODAL -->
+    <div id="view-student-modal" class="modal-overlay hidden" onclick="if(event.target === this) closeViewStudentModal()">
+        <div class="modal-container glass-card" style="margin: auto; max-width: 600px; padding: 0; overflow: hidden; border-radius: 16px;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #0077be 0%, #00a8ff 100%); color: white; padding: 18px 24px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                        🎓
+                    </div>
+                    <div>
+                        <h3 style="margin: 0; color: white; font-size: 17px;">Student Profile &amp; Details</h3>
+                        <p style="margin: 2px 0 0 0; font-size: 12px; color: rgba(255,255,255,0.85);" id="view-student-header-sub">—</p>
+                    </div>
+                </div>
+                <button class="modal-close-btn" onclick="closeViewStudentModal()" style="color: white; font-size: 24px;">&times;</button>
+            </div>
+            
+            <div class="modal-body" style="padding: 24px; max-height: 75vh; overflow-y: auto;">
+                <!-- Student Details Section -->
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; border-bottom: 2px solid #e8f4fd; padding-bottom: 6px;">
+                        <span style="font-size: 16px;">👤</span>
+                        <h4 style="margin: 0; color: #0077be; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Student Information</h4>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Full Name</span>
+                            <div id="v-student-name" style="font-size: 14px; font-weight: 600; color: #1e293b; margin-top: 2px;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Student ID</span>
+                            <div id="v-student-id" style="font-size: 14px; font-weight: 700; color: #0077be; margin-top: 2px;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Grade / Class</span>
+                            <div id="v-student-grade" style="font-size: 14px; font-weight: 600; color: #1e293b; margin-top: 2px;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Section</span>
+                            <div id="v-student-section" style="font-size: 14px; font-weight: 600; color: #1e293b; margin-top: 2px;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Email</span>
+                            <div id="v-student-email" style="font-size: 13px; font-weight: 500; color: #1e293b; margin-top: 2px; word-break: break-all;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Phone Number</span>
+                            <div id="v-student-phone" style="font-size: 13px; font-weight: 500; color: #1e293b; margin-top: 2px;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Date of Birth</span>
+                            <div id="v-student-dob" style="font-size: 13px; font-weight: 500; color: #1e293b; margin-top: 2px;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Address</span>
+                            <div id="v-student-address" style="font-size: 13px; font-weight: 500; color: #1e293b; margin-top: 2px;">—</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Parent / Guardian Details Section -->
+                <div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; border-bottom: 2px solid #e8f4fd; padding-bottom: 6px;">
+                        <span style="font-size: 16px;">👨‍👩‍👧</span>
+                        <h4 style="margin: 0; color: #0077be; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Parent / Guardian Information</h4>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                        <div style="grid-column: 1 / -1; background: #f0fdf4; padding: 12px 14px; border-radius: 8px; border: 1px solid #bbf7d0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #166534; text-transform: uppercase;">Parent / Guardian Name</span>
+                            <div id="v-parent-name" style="font-size: 15px; font-weight: 700; color: #14532d; margin-top: 2px;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Parent Email</span>
+                            <div id="v-parent-email" style="font-size: 13px; font-weight: 500; color: #1e293b; margin-top: 2px; word-break: break-all;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Parent Phone</span>
+                            <div id="v-parent-phone" style="font-size: 13px; font-weight: 500; color: #1e293b; margin-top: 2px;">—</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-top: 24px;">
+                    <button type="button" class="btn-toggle-fee pay" onclick="closeViewStudentModal()" style="padding: 10px 24px; font-weight: 600; font-size: 13px; background: #64748b; border: none; border-radius: 8px; color: white; cursor: pointer;">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW TEACHER DETAILS MODAL -->
+    <div id="view-teacher-modal" class="modal-overlay hidden" onclick="if(event.target === this) closeViewTeacherModal()">
+        <div class="modal-container glass-card" style="margin: auto; max-width: 600px; padding: 0; overflow: hidden; border-radius: 16px;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #9c27b0 0%, #ba68c8 100%); color: white; padding: 18px 24px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                        👨‍🏫
+                    </div>
+                    <div>
+                        <h3 style="margin: 0; color: white; font-size: 17px;">Teacher Profile &amp; Details</h3>
+                        <p style="margin: 2px 0 0 0; font-size: 12px; color: rgba(255,255,255,0.85);" id="view-teacher-header-sub">—</p>
+                    </div>
+                </div>
+                <button class="modal-close-btn" onclick="closeViewTeacherModal()" style="color: white; font-size: 24px;">&times;</button>
+            </div>
+            
+            <div class="modal-body" style="padding: 24px; max-height: 75vh; overflow-y: auto;">
+                <!-- Teacher Details Section -->
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; border-bottom: 2px solid #f3e5f5; padding-bottom: 6px;">
+                        <span style="font-size: 16px;">👤</span>
+                        <h4 style="margin: 0; color: #9c27b0; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Teacher Information</h4>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Full Name</span>
+                            <div id="v-teacher-name" style="font-size: 14px; font-weight: 600; color: #1e293b; margin-top: 2px;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Employee ID</span>
+                            <div id="v-teacher-id" style="font-size: 14px; font-weight: 700; color: #9c27b0; margin-top: 2px;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Subject Specialization</span>
+                            <div id="v-teacher-subject" style="font-size: 14px; font-weight: 600; color: #1e293b; margin-top: 2px;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Qualification</span>
+                            <div id="v-teacher-qualification" style="font-size: 14px; font-weight: 600; color: #1e293b; margin-top: 2px;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Email</span>
+                            <div id="v-teacher-email" style="font-size: 13px; font-weight: 500; color: #1e293b; margin-top: 2px; word-break: break-all;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Phone Number</span>
+                            <div id="v-teacher-phone" style="font-size: 13px; font-weight: 500; color: #1e293b; margin-top: 2px;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Date of Birth</span>
+                            <div id="v-teacher-dob" style="font-size: 13px; font-weight: 500; color: #1e293b; margin-top: 2px;">—</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Basic Salary</span>
+                            <div id="v-teacher-salary" style="font-size: 13px; font-weight: 700; color: #0077be; margin-top: 2px;">—</div>
+                        </div>
+                        <div style="grid-column: 1 / -1; background: #f8fafc; padding: 10px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Residential Address</span>
+                            <div id="v-teacher-address" style="font-size: 13px; font-weight: 500; color: #1e293b; margin-top: 2px;">—</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-top: 24px;">
+                    <button type="button" class="btn-toggle-fee pay" onclick="closeViewTeacherModal()" style="padding: 10px 24px; font-weight: 600; font-size: 13px; background: #64748b; border: none; border-radius: 8px; color: white; cursor: pointer;">
+                        Close
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -3937,6 +4200,7 @@
                     window.currentTeacherClassGrades = undefined;
                     window.currentTeacherGrades = undefined;
                     window.currentTeacherSubjects = undefined;
+                    window.currentTeacherGradeSubjectsMap = undefined;
                     
                     showToast('Successfully logged in!', 'success');
                     showPortal();
@@ -3961,6 +4225,7 @@
             window.currentTeacherClassGrades = undefined;
             window.currentTeacherGrades = undefined;
             window.currentTeacherSubjects = undefined;
+            window.currentTeacherGradeSubjectsMap = undefined;
             if (chatMessagesPollingInterval) {
                 clearInterval(chatMessagesPollingInterval);
                 chatMessagesPollingInterval = null;
@@ -4010,7 +4275,7 @@
                 // Adjust metrics and layout on dashboard based on role
                 if (role === 'teacher') {
                     if (metric1) metric1.innerText = 'My Subjects / Assignments';
-                    if (metric2) metric2.innerText = 'Student Submissions';
+                    if (metric2) metric2.innerText = 'Student Assignment Submissions';
                     if (metric3) metric3.innerText = 'Timetable Schedule';
                     
                     if (shortcutGrid) {
@@ -4154,13 +4419,21 @@
                 'meal-plan': ['Meal Plan', 'Daily school meal schedule for breakfast, lunch and snacks'],
                 'teacher-materials': ['Upload Materials', 'Publish curriculum content and assignments for grades'],
                 'teacher-uploaded-materials': ['Uploaded Materials', 'History of all materials and assignments published'],
-                'teacher-submissions': ['Student Homework Submissions', 'Assess papers and assign final grades to students'],
+                'teacher-submissions': ['Student Assignment Submissions', 'Assess papers and assign final grades to students'],
                 'teacher-class-results': ['My Class Results', 'All subject marks, total scores, averages, and ranks for students in your assigned class'],
+                'class-rankings': ['Class Rankings', 'View and export student academic ranks and scores by grade, term, and year'],
                 'teacher-salaries': ['My Salaries', 'Overview of monthly compensation paid by school administration'],
                 'teacher-qr': ['My Attendance QR', 'Show or download your QR code for daily attendance'],
                 'admin-content': ['Teacher Content Library', 'Browse all materials and assignments uploaded by teachers'],
+                'ai-performance': ['AI Performance Insights', 'Academic performance analysis & AI-powered evaluations'],
             };
             
+            // Restrict admin-only views
+            if (viewName === 'class-rankings' && role !== 'admin') {
+                switchView('dashboard');
+                return;
+            }
+
             document.getElementById('workspace-title').innerText = headers[viewName] ? headers[viewName][0] : 'Workspace';
             document.getElementById('workspace-subtitle').innerText = headers[viewName] ? headers[viewName][1] : '';
             
@@ -4180,6 +4453,7 @@
             }
             if (viewName === 'teacher-own-attendance') fetchTeacherOwnAttendance();
             if (viewName === 'teacher-class-results') fetchTeacherClassResults();
+            if (viewName === 'ai-performance') initAiPerformanceView();
             if (viewName === 'timetable') fetchTimetableRoster();
             if (viewName === 'messages') fetchConversationsAndContacts();
             if (viewName === 'fees') {
@@ -4343,17 +4617,28 @@
             tbody.innerHTML = filtered.map(user => {
                 const isStudent = user.role.toLowerCase() === 'student';
                 const isTeacher = user.role.toLowerCase() === 'teacher';
+                const isAdmin = user.role.toLowerCase() === 'admin';
                 const studentId = (isStudent && user.student) ? user.student.id : null;
                 const safeName  = user.name.replace(/'/g, "\\'");
 
                 let actionBtnHtml = `<div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">`;
 
+                if (isStudent) {
+                    actionBtnHtml += `<button onclick="openViewStudentModal(${user.id})" style="padding:4px 9px; font-size:11px; font-weight:600; border:none; border-radius:6px; background:#4CAF50; color:white; cursor:pointer;">View</button>`;
+                }
+                if (isTeacher) {
+                    actionBtnHtml += `<button onclick="openViewTeacherModal(${user.id})" style="padding:4px 9px; font-size:11px; font-weight:600; border:none; border-radius:6px; background:#4CAF50; color:white; cursor:pointer;">View</button>`;
+                }
                 if (isStudent || isTeacher) {
                     actionBtnHtml += `<button onclick="showUserQrCode(${user.id}, '${safeName}', '${user.role}', ${studentId})" style="padding:4px 9px; font-size:11px; font-weight:600; border:none; border-radius:6px; background:#9c27b0; color:white; cursor:pointer;">QR</button>`;
                 }
-                actionBtnHtml += `<button onclick="openEditUserModal(${user.id})" style="padding:4px 9px; font-size:11px; font-weight:600; border:none; border-radius:6px; background:#0077be; color:white; cursor:pointer;">Edit</button>`;
+                if (!isAdmin) {
+                    actionBtnHtml += `<button onclick="openEditUserModal(${user.id})" style="padding:4px 9px; font-size:11px; font-weight:600; border:none; border-radius:6px; background:#0077be; color:white; cursor:pointer;">Edit</button>`;
+                }
                 actionBtnHtml += `<button onclick="openChangePasswordModal(${user.id}, '${safeName}')" style="padding:4px 9px; font-size:11px; font-weight:600; border:none; border-radius:6px; background:#ff9800; color:white; cursor:pointer;">Password</button>`;
-                actionBtnHtml += `<button onclick="confirmDeleteUser(${user.id}, '${safeName}')" style="padding:4px 9px; font-size:11px; font-weight:600; border:none; border-radius:6px; background:#ff4d4f; color:white; cursor:pointer;">Delete</button>`;
+                if (!isAdmin) {
+                    actionBtnHtml += `<button onclick="confirmDeleteUser(${user.id}, '${safeName}')" style="padding:4px 9px; font-size:11px; font-weight:600; border:none; border-radius:6px; background:#ff4d4f; color:white; cursor:pointer;">Delete</button>`;
+                }
                 actionBtnHtml += `</div>`;
 
                 let displayId = `#${user.id}`;
@@ -4372,6 +4657,73 @@
                     </tr>
                 `;
             }).join('');
+        }
+
+        function openViewStudentModal(userId) {
+            const user = usersData.find(u => String(u.id) === String(userId));
+            if (!user) return;
+            const student = user.student || {};
+
+            const headerSub = document.getElementById('view-student-header-sub');
+            if (headerSub) headerSub.innerText = `${user.name} (${student.student_id || ('#' + user.id)})`;
+            
+            const setVal = (id, val) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = val || '—';
+            };
+
+            setVal('v-student-name', user.name);
+            setVal('v-student-id', student.student_id || ('#' + user.id));
+            setVal('v-student-grade', student.grade ? `Grade ${student.grade}` : '—');
+            setVal('v-student-section', student.class ? `Class ${student.class}` : '—');
+            setVal('v-student-email', user.email);
+            setVal('v-student-phone', user.phone);
+            setVal('v-student-dob', user.dob);
+            setVal('v-student-address', user.address);
+
+            setVal('v-parent-name', student.parent_name);
+            setVal('v-parent-email', student.parent_email);
+            setVal('v-parent-phone', student.parent_phone);
+
+            const modal = document.getElementById('view-student-modal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeViewStudentModal() {
+            const modal = document.getElementById('view-student-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function openViewTeacherModal(userId) {
+            const user = usersData.find(u => String(u.id) === String(userId));
+            if (!user) return;
+            const teacher = user.teacher || {};
+
+            const headerSub = document.getElementById('view-teacher-header-sub');
+            if (headerSub) headerSub.innerText = `${user.name} (${teacher.employee_id || ('#' + user.id)})`;
+            
+            const setVal = (id, val) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = val || '—';
+            };
+
+            setVal('v-teacher-name', user.name);
+            setVal('v-teacher-id', teacher.employee_id || ('#' + user.id));
+            setVal('v-teacher-subject', teacher.subject_specialization);
+            setVal('v-teacher-qualification', teacher.qualification);
+            setVal('v-teacher-email', user.email);
+            setVal('v-teacher-phone', user.phone);
+            setVal('v-teacher-dob', user.dob);
+            setVal('v-teacher-salary', teacher.salary ? `LKR ${parseFloat(teacher.salary).toLocaleString('en-US', {minimumFractionDigits: 2})}` : '—');
+            setVal('v-teacher-address', user.address);
+
+            const modal = document.getElementById('view-teacher-modal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeViewTeacherModal() {
+            const modal = document.getElementById('view-teacher-modal');
+            if (modal) modal.classList.add('hidden');
         }
 
 
@@ -4630,7 +4982,7 @@
         function renderTeacherUploadedMaterials(subjects) {
             const tableBody = document.getElementById('teacher-uploaded-table-body');
             if (subjects.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #697386; padding: 30px;">No uploaded materials found matching your search.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #697386; padding: 30px;">No uploaded materials found matching your search.</td></tr>';
                 return;
             }
             
@@ -4656,13 +5008,19 @@
                     }
                 }
 
+                const deleteBtn = (role === 'teacher' || role === 'admin')
+                    ? `<button class="btn-toggle-fee unpay" onclick="deleteTeacherUploadedMaterial(${sub.id})" style="padding: 4px 10px; font-size: 11px; background: #ff4d4f; border: none; border-radius: 6px; color: white; cursor: pointer;">Delete</button>`
+                    : '—';
+
                 return `
                     <tr>
                         <td style="font-weight: 600; color: #4CAF50;">${sub.grade || '—'}</td>
                         <td style="font-weight: 500;">${sub.subject_name || '—'}</td>
+                        <td style="font-weight: 500; color: #1a1f36;">${sub.topic || '—'}</td>
                         <td>${pdfLink}</td>
                         <td>${assignmentLink} ${submitBtn}</td>
                         <td>${dateStr}</td>
+                        <td>${deleteBtn}</td>
                     </tr>
                 `;
             }).join('');
@@ -4673,14 +5031,15 @@
             const filtered = teacherUploadedMaterialsData.filter(sub => {
                 const gradeStr = (sub.grade || '').toLowerCase();
                 const nameStr = (sub.subject_name || '').toLowerCase();
-                return gradeStr.includes(search) || nameStr.includes(search);
+                const topicStr = (sub.topic || '').toLowerCase();
+                return gradeStr.includes(search) || nameStr.includes(search) || topicStr.includes(search);
             });
             renderTeacherUploadedMaterials(filtered);
         }
 
         async function fetchTeacherUploadedMaterials() {
             const tableBody = document.getElementById('teacher-uploaded-table-body');
-            tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #697386; padding: 30px;">Loading your materials...</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #697386; padding: 30px;">Loading your materials...</td></tr>';
             
             try {
                 const adminObj = JSON.parse(localStorage.getItem('admin_user') || '{}');
@@ -4714,11 +5073,22 @@
                         filterTeacherUploadedMaterials();
                     }
                 } else {
-                    tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #697386; padding: 30px;">Failed to load materials.</td></tr>';
+                    tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #697386; padding: 30px;">Failed to load materials.</td></tr>';
                 }
             } catch (err) {
                 console.error("Failed to load teacher materials", err);
-                tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: red; padding: 30px;">Network error loading materials.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: red; padding: 30px;">Network error loading materials.</td></tr>';
+            }
+        }
+
+        async function deleteTeacherUploadedMaterial(id) {
+            if (!confirm('Are you sure you want to delete this uploaded material / assignment?')) return;
+            try {
+                const res = await apiRequest(`/subjects/${id}`, { method: 'DELETE' });
+                showToast(res.message || 'Deleted successfully', 'success');
+                fetchTeacherUploadedMaterials();
+            } catch (err) {
+                showToast(err.message || 'Failed to delete', 'error');
             }
         }
 
@@ -4831,16 +5201,153 @@
             }
         }
 
+        async function getTeacherAssignedClassGrades() {
+            if (window.currentTeacherClassGrades && window.currentTeacherClassGrades.length > 0) {
+                return window.currentTeacherClassGrades;
+            }
+            const adminObj = JSON.parse(localStorage.getItem('admin_user') || '{}');
+            try {
+                const gradesRes = await apiRequest('/admin/grades');
+                if (gradesRes.success && Array.isArray(gradesRes.data)) {
+                    gradesData = gradesRes.data;
+                    const assigned = [];
+                    gradesRes.data.forEach(g => {
+                        if (isClassTeacherOfGrade(g, adminObj) && g.name) {
+                            assigned.push(g.name.trim());
+                        }
+                    });
+                    window.currentTeacherClassGrades = assigned;
+                    return assigned;
+                }
+            } catch(e) {}
+            return window.currentTeacherClassGrades || [];
+        }
+
+        async function populateAttendanceGradeFilter() {
+            const filterEl = document.getElementById('attendance-grade-filter');
+            if (!filterEl) return;
+
+            const adminObj = JSON.parse(localStorage.getItem('admin_user') || '{}');
+            const role = ((adminObj && adminObj.role) || localStorage.getItem('user_role') || 'admin').toLowerCase();
+
+            if (role === 'teacher') {
+                const assignedGrades = await getTeacherAssignedClassGrades();
+                const previousVal = filterEl.value;
+                filterEl.innerHTML = '';
+
+                if (!assignedGrades || assignedGrades.length === 0) {
+                    const opt = document.createElement('option');
+                    opt.value = '';
+                    opt.textContent = 'No Assigned Class';
+                    filterEl.appendChild(opt);
+                } else {
+                    assignedGrades.forEach(g => {
+                        const rawNum = String(g).replace(/Grade /i, '').trim();
+                        const label = String(g).toLowerCase().startsWith('grade') ? g : `Grade ${g}`;
+                        const opt = document.createElement('option');
+                        opt.value = rawNum;
+                        opt.textContent = label;
+                        filterEl.appendChild(opt);
+                    });
+
+                    if (assignedGrades.length > 1) {
+                        const allAssignedOpt = document.createElement('option');
+                        allAssignedOpt.value = '';
+                        allAssignedOpt.textContent = 'All Assigned Classes';
+                        filterEl.insertBefore(allAssignedOpt, filterEl.firstChild);
+                    }
+
+                    if (previousVal && Array.from(filterEl.options).some(o => o.value === previousVal)) {
+                        filterEl.value = previousVal;
+                    } else {
+                        filterEl.selectedIndex = 0;
+                    }
+                }
+            } else {
+                // Admin: show all grades
+                const previousVal = filterEl.value;
+                filterEl.innerHTML = '<option value="">All Grades</option>';
+
+                if (!gradesData || gradesData.length === 0) {
+                    try {
+                        const gRes = await apiRequest('/admin/grades');
+                        if (gRes.success && Array.isArray(gRes.data)) {
+                            gradesData = gRes.data;
+                        }
+                    } catch (e) {}
+                }
+
+                const uniqueGrades = new Set();
+                if (gradesData && gradesData.length > 0) {
+                    gradesData.forEach(g => {
+                        const raw = (g.name || '').replace(/Grade /i, '').trim();
+                        if (raw) uniqueGrades.add(raw);
+                    });
+                }
+                for (let i = 1; i <= 12; i++) {
+                    uniqueGrades.add(String(i));
+                }
+
+                const sortedGrades = Array.from(uniqueGrades).sort((a, b) => parseInt(a) - parseInt(b));
+                sortedGrades.forEach(gradeNum => {
+                    const opt = document.createElement('option');
+                    opt.value = gradeNum;
+                    opt.textContent = `Grade ${gradeNum}`;
+                    filterEl.appendChild(opt);
+                });
+
+                if (previousVal && Array.from(filterEl.options).some(o => o.value === previousVal)) {
+                    filterEl.value = previousVal;
+                }
+            }
+        }
+
         // Fetch & render Attendance
-        async function fetchAttendance(gradeFilter = '') {
+        async function fetchAttendance(gradeFilter = null) {
             const tbody = document.getElementById('attendance-table-body');
             tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: #697386; padding: 30px;">Loading attendance logs...</td></tr>';
             
+            const adminObj = JSON.parse(localStorage.getItem('admin_user') || '{}');
+            const role = ((adminObj && adminObj.role) || localStorage.getItem('user_role') || 'admin').toLowerCase();
+
+            await populateAttendanceGradeFilter();
+
+            const filterEl = document.getElementById('attendance-grade-filter');
+            const activeFilter = (gradeFilter !== null && gradeFilter !== undefined) 
+                ? gradeFilter 
+                : (filterEl ? filterEl.value : '');
+
+            if (role === 'teacher') {
+                const assignedGrades = window.currentTeacherClassGrades || [];
+                if (assignedGrades.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="8" style="text-align: center; color: #697386; padding: 50px 20px;">
+                                <div style="font-size:36px; margin-bottom:10px;">📋</div>
+                                <h3 style="margin:0 0 6px 0; color:#1a1f36; font-size:16px;">You are not assigned as a Class Teacher</h3>
+                                <p style="margin:0; font-size:13px; color:#697386;">Attendance logs are only visible to assigned Class Teachers and Administrators.</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+            }
+
             try {
-                const url = gradeFilter ? `/admin/attendance?grade=${encodeURIComponent(gradeFilter)}` : '/admin/attendance';
+                let url = '/admin/attendance';
+                if (activeFilter) {
+                    url += `?grade=${encodeURIComponent(activeFilter)}`;
+                } else if (role === 'teacher') {
+                    const assignedGrades = window.currentTeacherClassGrades || [];
+                    if (assignedGrades.length > 0) {
+                        const firstRaw = String(assignedGrades[0]).replace(/Grade /i, '').trim();
+                        url += `?grade=${encodeURIComponent(firstRaw)}`;
+                    }
+                }
+
                 const res = await apiRequest(url);
                 if (res.success) {
-                    attendanceData = res.data.filter(rec => rec.user && rec.user.role === 'student');
+                    attendanceData = (res.data || []).filter(rec => rec.user && rec.user.role === 'student');
                     renderAttendance();
                 } else {
                     tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #ff4d4f; padding: 30px;">${res.message || 'Error loading logs.'}</td></tr>`;
@@ -4851,25 +5358,13 @@
         }
 
         function applyAttendanceGradeFilter() {
-            const gradeFilter = document.getElementById('attendance-grade-filter').value;
+            const gradeFilter = document.getElementById('attendance-grade-filter')?.value;
             fetchAttendance(gradeFilter);
         }
 
         function renderAttendance() {
             const tbody = document.getElementById('attendance-table-body');
-            const search = document.getElementById('attendance-search').value.toLowerCase();
-            
-            const filtered = attendanceData.filter(rec => {
-                const u = rec.user || {};
-                const student = u.student || {};
-                const grade = student.grade ? 'grade ' + student.grade : '';
-                const matchesSearch = (u.name && u.name.toLowerCase().includes(search)) ||
-                                      (student.student_id && student.student_id.toLowerCase().includes(search)) ||
-                                      rec.date.includes(search) ||
-                                      (rec.status && rec.status.toLowerCase().includes(search)) ||
-                                      grade.includes(search);
-                return matchesSearch;
-            });
+            const filtered = getFilteredStudentAttendance();
             
             if (filtered.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: #697386; padding: 30px;">No matching attendance logs found</td></tr>';
@@ -7416,6 +7911,7 @@
             e.preventDefault();
             const grade = document.getElementById('material-grade').value;
             const subject = document.getElementById('material-subject-select').value;
+            const topic = (document.getElementById('material-topic-desc')?.value || '').trim();
             const pdfFile = document.getElementById('material-pdf').files[0];
 
             if (!pdfFile) {
@@ -7426,6 +7922,7 @@
             const formData = new FormData();
             formData.append('grade', grade);
             formData.append('subject_name', subject);
+            if (topic) formData.append('topic', topic);
             formData.append('pdf', pdfFile);
 
             const submitBtn = e.target.querySelector('button[type="submit"]');
@@ -7464,6 +7961,7 @@
             e.preventDefault();
             const grade = document.getElementById('assignment-grade').value;
             const subject = document.getElementById('assignment-subject-select').value;
+            const title = (document.getElementById('assignment-title')?.value || '').trim();
             const dueTime = document.getElementById('assignment-due-time').value.trim();
             const assignmentFile = document.getElementById('assignment-pdf').files[0];
 
@@ -7475,6 +7973,7 @@
             const formData = new FormData();
             formData.append('grade', grade);
             formData.append('subject_name', subject);
+            if (title) formData.append('topic', title);
             formData.append('due_time', dueTime);
             formData.append('assignment', assignmentFile);
 
@@ -7512,11 +8011,82 @@
 
         let studentSubmissions = [];
 
+        function isSubmissionAccessibleToTeacher(sub) {
+            if (!sub || !sub.subject) return false;
+            
+            const subGrade = String(sub.subject.grade || '').trim();
+            const subName = String(sub.subject.subject_name || sub.subject.name || '').trim().toLowerCase();
+            const subTeacherId = sub.subject.teacher_id ? String(sub.subject.teacher_id) : null;
+            const subId = sub.subject.id ? String(sub.subject.id) : null;
+
+            const adminObj = JSON.parse(localStorage.getItem('admin_user') || '{}');
+            const teacherId = adminObj.teacher ? String(adminObj.teacher.id) : null;
+            const userId = adminObj.id ? String(adminObj.id) : null;
+
+            // If the subject is explicitly assigned to another teacher, do not show to this teacher
+            if (subTeacherId && ((teacherId && subTeacherId !== teacherId) && (!userId || subTeacherId !== userId))) {
+                return false;
+            }
+
+            // 1. Direct teacher_id match on subject
+            if ((teacherId && subTeacherId === teacherId) || (userId && subTeacherId === userId)) return true;
+
+            // 2. Subject in teacher's grade subjects map (e.g. from timetable or subjects table)
+            const gradeMap = window.currentTeacherGradeSubjectsMap || {};
+            for (const [gName, subSet] of Object.entries(gradeMap)) {
+                if (isExactGradeMatch(gName, subGrade)) {
+                    if (subSet && (subSet instanceof Set || Array.isArray(subSet))) {
+                        const subArray = Array.from(subSet).map(s => String(s).trim().toLowerCase());
+                        if (subArray.some(s => s === subName || subName.includes(s) || s.includes(subName))) return true;
+                    }
+                }
+            }
+
+            // 3. allSubjectsData check
+            if (Array.isArray(window.allSubjectsData) && window.allSubjectsData.length > 0) {
+                const isAssigned = window.allSubjectsData.some(s => {
+                    const matchesTeacher = (teacherId && String(s.teacher_id) === teacherId) || (userId && String(s.teacher_id) === userId);
+                    const matchesGrade = isExactGradeMatch(s.grade, subGrade);
+                    const sName = (s.subject_name || s.name || '').trim().toLowerCase();
+                    return matchesTeacher && matchesGrade && ((sName === subName) || (String(s.id) === subId));
+                });
+                if (isAssigned) return true;
+            }
+
+            // 4. Specialization check
+            if (adminObj.teacher && adminObj.teacher.subject_specialization) {
+                const spec = adminObj.teacher.subject_specialization.toLowerCase();
+                const teachesGrade = (window.currentTeacherGrades || []).some(g => isExactGradeMatch(g, subGrade));
+                if (teachesGrade && spec.split(',').some(s => s.trim() && subName.includes(s.trim()))) return true;
+            }
+
+            return false;
+        }
+
         async function fetchStudentSubmissions() {
             try {
                 const adminObj = JSON.parse(localStorage.getItem('admin_user') || '{}');
+                const role = ((adminObj && adminObj.role) || localStorage.getItem('user_role') || 'admin').toLowerCase();
                 const teacherId = adminObj.teacher ? adminObj.teacher.id : '';
-                const res = await apiRequest(`/subject-submissions?teacher_id=${teacherId}`);
+                const userId = adminObj.id || '';
+
+                if (role === 'teacher') {
+                    if (!window.currentTeacherGradeSubjectsMap || !window.currentTeacherClassGrades) {
+                        await setupTeacherDashboard(adminObj);
+                    }
+                    if (!window.allSubjectsData) {
+                        try {
+                            const sRes = await apiRequest('/subjects');
+                            if (sRes.success && sRes.data) window.allSubjectsData = sRes.data;
+                        } catch (e) {}
+                    }
+                }
+
+                const url = (role === 'teacher')
+                    ? `/subject-submissions?teacher_id=${teacherId}&user_id=${userId}`
+                    : `/subject-submissions`;
+
+                const res = await apiRequest(url);
                 if (res.success && res.data) {
                     studentSubmissions = res.data;
                     
@@ -7526,7 +8096,7 @@
                         gradeSelect.innerHTML = '<option value="">All Assigned Grades</option>';
                         
                         let gradesToPopulate = [];
-                        if (window.currentTeacherGrades && window.currentTeacherGrades.length > 0) {
+                        if (role === 'teacher' && window.currentTeacherGrades && window.currentTeacherGrades.length > 0) {
                             gradesToPopulate = window.currentTeacherGrades;
                         } else {
                             const uniqueGrades = new Set();
@@ -7559,16 +8129,22 @@
             const tbody = document.getElementById('teacher-submissions-table-body');
             tbody.innerHTML = '';
             
-            const searchVal = document.getElementById('teacher-submissions-search').value.toLowerCase();
-            const gradeFilter = document.getElementById('teacher-submissions-grade-filter')?.value.toLowerCase() || '';
+            const searchVal = (document.getElementById('teacher-submissions-search')?.value || '').toLowerCase().trim();
+            const gradeFilter = (document.getElementById('teacher-submissions-grade-filter')?.value || '').trim();
+            const adminObj = JSON.parse(localStorage.getItem('admin_user') || '{}');
+            const role = ((adminObj && adminObj.role) || localStorage.getItem('user_role') || 'admin').toLowerCase();
             
             const filtered = studentSubmissions.filter(sub => {
+                if (role === 'teacher' && !isSubmissionAccessibleToTeacher(sub)) {
+                    return false;
+                }
+
                 const studentName = (sub.user ? sub.user.name : '').toLowerCase();
-                const subjectName = (sub.subject ? sub.subject.subject_name : '').toLowerCase();
-                const studentGrade = (sub.subject ? (sub.subject.grade || '') : '').toLowerCase();
+                const subjectName = (sub.subject ? (sub.subject.subject_name || '') : '').toLowerCase();
+                const studentGrade = (sub.subject ? (sub.subject.grade || '') : '').trim();
                 
-                const matchesSearch = studentName.includes(searchVal) || subjectName.includes(searchVal);
-                const matchesGrade = gradeFilter ? studentGrade.includes(gradeFilter) : true;
+                const matchesSearch = !searchVal || studentName.includes(searchVal) || subjectName.includes(searchVal);
+                const matchesGrade = gradeFilter ? isExactGradeMatch(gradeFilter, studentGrade) : true;
                 
                 return matchesSearch && matchesGrade;
             });
@@ -7628,7 +8204,10 @@
             }
             const examFilterClass = document.getElementById('exam-results-filter-class');
             if (examFilterClass) {
-                examFilterClass.addEventListener('change', renderExamResults);
+                examFilterClass.addEventListener('change', () => {
+                    updateExamResultSubjectsForSelectedClass();
+                    renderExamResults();
+                });
             }
             const examFilterSubject = document.getElementById('exam-results-filter-subject');
             if (examFilterSubject) {
@@ -7744,28 +8323,6 @@
         let examStudentsList = [];
         let examSubjectsLoaded = false;
         let examStudentsLoaded = false;
-        let activeExamTab = 'records';
-
-        function switchExamTab(tab) {
-            activeExamTab = tab;
-            const tabRecords = document.getElementById('exam-tab-records');
-            const tabStudentwise = document.getElementById('exam-tab-studentwise');
-            const sectionRecords = document.getElementById('exam-records-section');
-            const sectionStudentwise = document.getElementById('exam-studentwise-section');
-
-            if (tab === 'records') {
-                tabRecords.classList.add('active');
-                tabStudentwise.classList.remove('active');
-                sectionRecords.classList.remove('hidden');
-                sectionStudentwise.classList.add('hidden');
-            } else {
-                tabRecords.classList.remove('active');
-                tabStudentwise.classList.add('active');
-                sectionRecords.classList.add('hidden');
-                sectionStudentwise.classList.remove('hidden');
-                renderStudentwiseReports();
-            }
-        }
 
         function isExactGradeMatch(teacherGrade, studentGrade) {
             if (!teacherGrade || !studentGrade) return false;
@@ -7789,98 +8346,14 @@
             const ctUserId = (g.classTeacher && g.classTeacher.user_id) ? String(g.classTeacher.user_id) : ((g.classTeacher && g.classTeacher.user) ? String(g.classTeacher.user.id) : null);
 
             if (teacherId && ctId && ctId === teacherId) return true;
+            if (userId && ctId && ctId === userId) return true;
             if (teacherId && ctTeacherId && ctTeacherId === teacherId) return true;
             if (userId && ctUserId && ctUserId === userId) return true;
 
             return false;
         }
 
-        function renderStudentwiseReports() {
-            const container = document.getElementById('exam-studentwise-container');
-            if (!container) return;
-            container.innerHTML = '';
 
-            const adminObj = JSON.parse(localStorage.getItem('admin_user') || '{}');
-            const role = (localStorage.getItem('user_role') || adminObj.role || 'teacher').toLowerCase();
-
-            const filteredStudents = examStudentsList.filter(user => {
-                if (!user.student) return false;
-                if (role !== 'teacher') return true;
-                if (!window.currentTeacherGrades || window.currentTeacherGrades.length === 0) return true;
-                return window.currentTeacherGrades.some(g => isExactGradeMatch(g, user.student.grade));
-            });
-
-            if (filteredStudents.length === 0) {
-                container.innerHTML = '<div style="text-align: center; color: #697386; padding: 30px;">No students found in your assigned grades.</div>';
-                return;
-            }
-
-            filteredStudents.forEach(user => {
-                const studentId = user.student.id;
-                const studentName = user.name;
-                const displayGrade = user.student.grade ? (String(user.student.grade).toLowerCase().startsWith('grade') ? user.student.grade : `Grade ${user.student.grade}`) : '—';
-                const gradeClass = displayGrade;
-
-                // Filter exam results for this student
-                const studentResults = examResultsData.filter(res => res.student_id === studentId);
-
-                const card = document.createElement('div');
-                card.className = 'glass-card';
-                card.style.padding = '20px';
-                card.style.marginBottom = '20px';
-
-                let tableRows = '';
-                if (studentResults.length > 0) {
-                    studentResults.forEach(res => {
-                        const subjectName = res.subject ? res.subject.subject_name : 'Unknown Subject';
-                        const remarks = res.remarks || '—';
-                        tableRows += `
-                            <tr>
-                                <td style="font-weight: 600; color:#1a1f36;">${subjectName}</td>
-                                <td>${res.exam_name}</td>
-                                <td>${res.term}</td>
-                                <td>${res.academic_year}</td>
-                                <td style="font-weight: bold; color: #0077be;">${res.marks_obtained} / ${res.total_marks}</td>
-                                <td><span class="badge" style="background:#ff9800; color:white; font-size:12px; font-weight:bold;">${res.grade}</span></td>
-                                <td>${remarks}</td>
-                            </tr>
-                        `;
-                    });
-                } else {
-                    tableRows = `
-                        <tr>
-                            <td colspan="7" style="text-align: center; color: #697386; padding: 15px;">No exam results recorded for this student.</td>
-                        </tr>
-                    `;
-                }
-
-                card.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 10px;">
-                        <h3 style="margin: 0; color: #1a1f36; font-size: 16px; font-weight: 700;">${studentName}</h3>
-                        <span class="badge" style="background: rgba(0, 119, 190, 0.1); color: #0077be; border: 1px solid rgba(0, 119, 190, 0.2); font-weight: 600; padding: 4px 8px; border-radius: 6px;">${gradeClass}</span>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="data-table" style="box-shadow: none; border: 1px solid rgba(0,0,0,0.05); width: 100%;">
-                            <thead>
-                                <tr>
-                                    <th>Subject</th>
-                                    <th>Exam Name</th>
-                                    <th>Term</th>
-                                    <th>Year</th>
-                                    <th>Marks</th>
-                                    <th>Grade</th>
-                                    <th>Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${tableRows}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
 
         async function fetchExamResults() {
             const tbody = document.getElementById('exam-results-table-body');
@@ -7899,43 +8372,30 @@
                 examResultsData = res; // ExamResultController returns array directly
                 
                 // Fetch subjects if not loaded
-                if (!examSubjectsLoaded) {
+                if (!examSubjectsLoaded || window.lastExamResultsRole !== role) {
                     const subjectsRes = await apiRequest('/subjects');
                     if (subjectsRes.success && subjectsRes.data) {
-                        const subjectFilter = document.getElementById('exam-results-filter-subject');
+                        window.allSubjectsData = subjectsRes.data.filter(s => s && s.subject_name && s.grade);
                         const subjectModalSelect = document.getElementById('exam-result-subject');
-                        
-                        subjectFilter.innerHTML = '<option value="">All Subjects</option>';
-                        subjectModalSelect.innerHTML = '<option value="" disabled selected>Select Subject</option>';
-                        const uniqueSubjects = new Map();
-                        subjectsRes.data.forEach(sub => {
-                            const name = sub.subject_name;
-                            if (!name) return;
-
-                            let isTeacherSubject = true;
-                            if (role === 'teacher' && window.currentTeacherSubjects && window.currentTeacherSubjects.length > 0) {
-                                isTeacherSubject = window.currentTeacherSubjects.some(sName => sName.toLowerCase() === name.toLowerCase());
-                            }
-
-                            if (isTeacherSubject && !uniqueSubjects.has(name.toLowerCase())) {
-                                uniqueSubjects.set(name.toLowerCase(), { id: sub.id, name: name });
-                            }
-                        });
-
-                        if (role === 'teacher' && window.currentTeacherSubjects && window.currentTeacherSubjects.length > 0) {
-                            window.currentTeacherSubjects.forEach(sName => {
-                                if (sName && !uniqueSubjects.has(sName.toLowerCase())) {
-                                    uniqueSubjects.set(sName.toLowerCase(), { id: sName, name: sName });
+                        if (subjectModalSelect) {
+                            subjectModalSelect.innerHTML = '<option value="" disabled selected>Select Subject</option>';
+                            const modalUnique = new Map();
+                            window.allSubjectsData.forEach(sub => {
+                                const name = sub.subject_name;
+                                if (name && !modalUnique.has(name.toLowerCase())) {
+                                    modalUnique.set(name.toLowerCase(), { id: sub.id, name: name });
                                 }
                             });
+                            Array.from(modalUnique.values()).sort((a, b) => a.name.localeCompare(b.name)).forEach(sub => {
+                                subjectModalSelect.innerHTML += `<option value="${sub.id}">${sub.name}</option>`;
+                            });
                         }
-                        
-                        uniqueSubjects.forEach(sub => {
-                            subjectFilter.innerHTML += `<option value="${sub.id}">${sub.name}</option>`;
-                            subjectModalSelect.innerHTML += `<option value="${sub.id}">${sub.name}</option>`;
-                        });
+                        updateExamResultSubjectsForSelectedClass();
+                        window.lastExamResultsRole = role;
                         examSubjectsLoaded = true;
                     }
+                } else {
+                    updateExamResultSubjectsForSelectedClass();
                 }
                 
                 // Fetch grades if not loaded
@@ -7964,9 +8424,196 @@
                 populateExamResultGradesDropdown();
 
                 renderExamResults();
-                renderStudentwiseReports();
             } catch (err) {
                 tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #ff4d4f; padding: 30px;">Failed to load exam results: ${err.message}</td></tr>`;
+            }
+        }
+        
+        function isExamResultAccessibleToTeacher(res) {
+            if (!res || !res.student) return false;
+            
+            const rawStudentGrade = String(res.student.grade || '').trim();
+            const subjectName = (res.subject ? (res.subject.subject_name || res.subject.name || '') : '').trim().toLowerCase();
+            const subjectId = String(res.subject_id || (res.subject ? res.subject.id : ''));
+
+            // 1. Is this student in the teacher's ASSIGNED CLASS (Class Teacher)?
+            const classTeacherGrades = window.currentTeacherClassGrades || [];
+            const isAssignedClass = classTeacherGrades.some(g => isExactGradeMatch(g, rawStudentGrade));
+            if (isAssignedClass) {
+                // Teacher is the Class Teacher -> Has full access to ALL results of this assigned class!
+                return true;
+            }
+
+            // 2. In other grades: ONLY results of the subjects assigned to them in that grade
+            const gradeMap = window.currentTeacherGradeSubjectsMap || {};
+            for (const [gName, subSet] of Object.entries(gradeMap)) {
+                if (isExactGradeMatch(gName, rawStudentGrade)) {
+                    if (subSet && (subSet instanceof Set || Array.isArray(subSet))) {
+                        const subArray = Array.from(subSet).map(s => String(s).trim().toLowerCase());
+                        if (subArray.some(s => s === subjectName || subjectName.includes(s) || s.includes(subjectName))) {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            // Fallback: check subjectsData where teacher_id matches for this grade & subject
+            const adminObj = JSON.parse(localStorage.getItem('admin_user') || '{}');
+            const teacherId = adminObj.teacher ? String(adminObj.teacher.id) : null;
+            const userId = adminObj.id ? String(adminObj.id) : null;
+
+            if (Array.isArray(window.allSubjectsData) && window.allSubjectsData.length > 0) {
+                const isSubjectAssigned = window.allSubjectsData.some(s => {
+                    const matchesTeacher = (teacherId && String(s.teacher_id) === teacherId) || (userId && String(s.teacher_id) === userId);
+                    const matchesGrade = isExactGradeMatch(s.grade, rawStudentGrade);
+                    const sName = (s.subject_name || s.name || '').trim().toLowerCase();
+                    const matchesSub = (sName === subjectName) || (String(s.id) === subjectId);
+                    return matchesTeacher && matchesGrade && matchesSub;
+                });
+                if (isSubjectAssigned) return true;
+            }
+
+            // Fallback check teacher specialization if grade is in currentTeacherGrades
+            if (adminObj.teacher && adminObj.teacher.subject_specialization) {
+                const spec = adminObj.teacher.subject_specialization.toLowerCase();
+                const teachesGrade = (window.currentTeacherGrades || []).some(g => isExactGradeMatch(g, rawStudentGrade));
+                if (teachesGrade && spec.split(',').some(s => s.trim() && subjectName.includes(s.trim()))) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        function updateExamResultSubjectsForSelectedClass() {
+            const adminObj = JSON.parse(localStorage.getItem('admin_user') || '{}');
+            const role = ((adminObj && adminObj.role) || localStorage.getItem('user_role') || 'teacher').toLowerCase();
+
+            const filterClassSelect = document.getElementById('exam-results-filter-class');
+            const subjectFilter = document.getElementById('exam-results-filter-subject');
+            if (!subjectFilter) return;
+
+            const selectedGrade = filterClassSelect ? (filterClassSelect.value || '').trim() : '';
+            const isClassTeacher = (window.currentTeacherClassGrades || []).some(g => isExactGradeMatch(g, selectedGrade));
+
+            const uniqueSubjects = new Map();
+
+            if (role === 'admin') {
+                // Admin: sees only real subjects added in the system (or filtered by selected class)
+                if (Array.isArray(window.allSubjectsData)) {
+                    window.allSubjectsData.forEach(sub => {
+                        const name = sub.subject_name;
+                        const grade = (sub.grade || '').trim();
+                        if (name && grade) {
+                            if (!selectedGrade || isExactGradeMatch(grade, selectedGrade)) {
+                                if (!uniqueSubjects.has(name.toLowerCase())) {
+                                    uniqueSubjects.set(name.toLowerCase(), { id: sub.id, name: name });
+                                }
+                            }
+                        }
+                    });
+                }
+                if (Array.isArray(examResultsData)) {
+                    examResultsData.forEach(r => {
+                        if (r.subject && r.subject.subject_name) {
+                            const name = r.subject.subject_name;
+                            const studentGrade = (r.student && r.student.grade) ? r.student.grade : (r.subject.grade || '');
+                            if (!selectedGrade || isExactGradeMatch(studentGrade, selectedGrade)) {
+                                if (!uniqueSubjects.has(name.toLowerCase())) {
+                                    uniqueSubjects.set(name.toLowerCase(), { id: r.subject_id || r.subject.id, name: name });
+                                }
+                            }
+                        }
+                    });
+                }
+            } else if (isClassTeacher) {
+                // Class Teacher: has access to ALL subjects in their class!
+                if (Array.isArray(window.allSubjectsData)) {
+                    window.allSubjectsData.forEach(sub => {
+                        const name = sub.subject_name;
+                        if (name && sub.grade && isExactGradeMatch(sub.grade, selectedGrade)) {
+                            if (!uniqueSubjects.has(name.toLowerCase())) {
+                                uniqueSubjects.set(name.toLowerCase(), { id: sub.id, name: name });
+                            }
+                        }
+                    });
+                }
+                if (Array.isArray(examResultsData)) {
+                    examResultsData.forEach(r => {
+                        if (r.student && isExactGradeMatch(r.student.grade, selectedGrade) && r.subject && r.subject.subject_name) {
+                            const name = r.subject.subject_name;
+                            if (!uniqueSubjects.has(name.toLowerCase())) {
+                                uniqueSubjects.set(name.toLowerCase(), { id: r.subject_id || r.subject.id, name: name });
+                            }
+                        }
+                    });
+                }
+            } else {
+                // Not Class Teacher: ONLY subjects assigned to this teacher in this grade!
+                const gradeMap = window.currentTeacherGradeSubjectsMap || {};
+                let matchedGradeKey = Object.keys(gradeMap).find(k => isExactGradeMatch(k, selectedGrade));
+                if (matchedGradeKey && gradeMap[matchedGradeKey]) {
+                    Array.from(gradeMap[matchedGradeKey]).forEach(subName => {
+                        if (subName && !uniqueSubjects.has(subName.toLowerCase())) {
+                            const subObj = Array.isArray(window.allSubjectsData) 
+                                ? window.allSubjectsData.find(s => s.subject_name && s.subject_name.toLowerCase() === subName.toLowerCase())
+                                : null;
+                            uniqueSubjects.set(subName.toLowerCase(), { id: subObj ? subObj.id : subName, name: subName });
+                        }
+                    });
+                }
+                // Fallback: check allSubjectsData where teacher_id matches for this grade
+                const teacherId = adminObj.teacher ? String(adminObj.teacher.id) : null;
+                const userId = adminObj.id ? String(adminObj.id) : null;
+                if (Array.isArray(window.allSubjectsData)) {
+                    window.allSubjectsData.forEach(s => {
+                        const matchesTeacher = (teacherId && String(s.teacher_id) === teacherId) || (userId && String(s.teacher_id) === userId);
+                        if (matchesTeacher && isExactGradeMatch(s.grade, selectedGrade) && s.subject_name) {
+                            if (!uniqueSubjects.has(s.subject_name.toLowerCase())) {
+                                uniqueSubjects.set(s.subject_name.toLowerCase(), { id: s.id, name: s.subject_name });
+                            }
+                        }
+                    });
+                }
+                // Fallback from specialization
+                if (uniqueSubjects.size === 0 && adminObj.teacher && adminObj.teacher.subject_specialization) {
+                    const specs = adminObj.teacher.subject_specialization.split(',');
+                    specs.forEach(spec => {
+                        const sTrim = spec.trim();
+                        if (sTrim && !uniqueSubjects.has(sTrim.toLowerCase())) {
+                            const subObj = Array.isArray(window.allSubjectsData)
+                                ? window.allSubjectsData.find(s => s.subject_name && s.subject_name.toLowerCase() === sTrim.toLowerCase())
+                                : null;
+                            uniqueSubjects.set(sTrim.toLowerCase(), { id: subObj ? subObj.id : sTrim, name: sTrim });
+                        }
+                    });
+                }
+            }
+
+            const currentVal = subjectFilter.value;
+            subjectFilter.innerHTML = '';
+
+            if (role === 'admin' || isClassTeacher) {
+                subjectFilter.innerHTML = '<option value="">All Subjects</option>';
+            }
+
+            if (uniqueSubjects.size === 0) {
+                if (role !== 'admin' && !isClassTeacher) {
+                    subjectFilter.innerHTML = '<option value="">No assigned subjects in this class</option>';
+                }
+            } else {
+                const sorted = Array.from(uniqueSubjects.values()).sort((a, b) => a.name.localeCompare(b.name));
+                sorted.forEach(sub => {
+                    subjectFilter.innerHTML += `<option value="${sub.name}">${sub.name}</option>`;
+                });
+            }
+
+            if (currentVal && Array.from(subjectFilter.options).some(o => String(o.value).toLowerCase() === String(currentVal).toLowerCase())) {
+                subjectFilter.value = currentVal;
+            } else if (role !== 'admin' && !isClassTeacher && subjectFilter.options.length > 0) {
+                subjectFilter.selectedIndex = 0;
+            } else {
+                subjectFilter.value = '';
             }
         }
         
@@ -8004,11 +8651,25 @@
 
             if (filterClassSelect) {
                 const currentFilterVal = filterClassSelect.value;
-                filterClassSelect.innerHTML = '<option value="">All Classes</option>';
+                if (role === 'admin') {
+                    filterClassSelect.innerHTML = '<option value="">All Classes</option>';
+                } else {
+                    filterClassSelect.innerHTML = '';
+                }
                 sortedGrades.forEach(grade => {
                     filterClassSelect.innerHTML += `<option value="${grade}">Grade ${grade}</option>`;
                 });
-                if (currentFilterVal) filterClassSelect.value = currentFilterVal;
+                if (role === 'teacher') {
+                    if (currentFilterVal && Array.from(filterClassSelect.options).some(o => o.value === currentFilterVal)) {
+                        filterClassSelect.value = currentFilterVal;
+                    } else if (filterClassSelect.options.length > 0) {
+                        filterClassSelect.selectedIndex = 0;
+                    }
+                } else {
+                    if (currentFilterVal) filterClassSelect.value = currentFilterVal;
+                    else filterClassSelect.value = '';
+                }
+                updateExamResultSubjectsForSelectedClass();
             }
         }
 
@@ -8081,33 +8742,23 @@
 
                     const uniqueGrades = new Set();
 
-                    if (role === 'teacher') {
-                        if (gradesData && gradesData.length > 0) {
-                            gradesData.forEach(g => {
-                                if (isClassTeacherOfGrade(g, adminObj) && g.name) {
-                                    let rawGrade = g.name.replace(/Grade /i, '').trim();
-                                    uniqueGrades.add(rawGrade);
-                                }
-                            });
-                        }
+                    if (gradesData && gradesData.length > 0) {
+                        gradesData.forEach(g => {
+                            let rawGrade = (g.name || '').replace(/Grade /i, '').trim();
+                            if (rawGrade) uniqueGrades.add(rawGrade.trim());
+                        });
+                    }
 
-                        if (uniqueGrades.size === 0 && window.currentTeacherClassGrades && window.currentTeacherClassGrades.length > 0) {
-                            window.currentTeacherClassGrades.forEach(g => {
-                                let rawGrade = (g || '').replace(/Grade /i, '').trim();
-                                if (rawGrade) uniqueGrades.add(rawGrade);
-                            });
-                        }
-                    } else {
-                        if (gradesData && gradesData.length > 0) {
-                            gradesData.forEach(g => {
-                                let rawGrade = (g.name || '').replace(/Grade /i, '').trim();
-                                uniqueGrades.add(rawGrade.trim());
-                            });
-                        }
+                    if (classRankingsData && classRankingsData.length > 0) {
+                        classRankingsData.forEach(res => {
+                            let g = res.student?.grade || res.grade || '';
+                            let rawGrade = (g || '').replace(/Grade /i, '').trim();
+                            if (rawGrade) uniqueGrades.add(rawGrade.trim());
+                        });
                     }
 
                     if (uniqueGrades.size === 0) {
-                        gradeFilter.innerHTML = '<option value="">No Assigned Class</option>';
+                        gradeFilter.innerHTML = '<option value="">No Grades Available</option>';
                     } else {
                         Array.from(uniqueGrades).sort((a, b) => parseInt(a) - parseInt(b)).forEach(grade => {
                             gradeFilter.innerHTML += `<option value="${grade}">${grade}</option>`;
@@ -8146,17 +8797,20 @@
             const asnPane = document.getElementById('admin-content-assignments-pane');
             const matBtn  = document.getElementById('admin-content-tab-materials');
             const asnBtn  = document.getElementById('admin-content-tab-assignments');
+            const typeWrapper = document.getElementById('admin-content-type-wrapper');
 
             if (tab === 'materials') {
                 matPane.style.display = 'block';
                 asnPane.style.display = 'none';
                 matBtn.style.background = '#0077be'; matBtn.style.color = 'white';
                 asnBtn.style.background = 'rgba(0,0,0,0.06)'; asnBtn.style.color = '#697386';
+                if (typeWrapper) typeWrapper.style.display = 'inline-block';
             } else {
                 matPane.style.display = 'none';
                 asnPane.style.display = 'block';
                 asnBtn.style.background = '#0077be'; asnBtn.style.color = 'white';
                 matBtn.style.background = 'rgba(0,0,0,0.06)'; matBtn.style.color = '#697386';
+                if (typeWrapper) typeWrapper.style.display = 'none';
             }
         }
 
@@ -8166,84 +8820,227 @@
                     apiRequest('/materials'),
                     apiRequest('/assignments')
                 ]);
-                adminMaterialsData  = Array.isArray(matRes) ? matRes : (matRes.data || []);
+                adminMaterialsData   = Array.isArray(matRes) ? matRes : (matRes.data || []);
                 adminAssignmentsData = Array.isArray(asnRes) ? asnRes : (asnRes.data || []);
+                
+                await populateAdminContentFilters();
                 renderAdminMaterials();
                 renderAdminAssignments();
             } catch (err) {
                 document.getElementById('admin-materials-table-body').innerHTML =
-                    `<tr><td colspan="7" style="text-align:center;color:#ff4d4f;padding:30px;">Error: ${err.message}</td></tr>`;
-                document.getElementById('admin-assignments-table-body').innerHTML =
                     `<tr><td colspan="8" style="text-align:center;color:#ff4d4f;padding:30px;">Error: ${err.message}</td></tr>`;
+                document.getElementById('admin-assignments-table-body').innerHTML =
+                    `<tr><td colspan="9" style="text-align:center;color:#ff4d4f;padding:30px;">Error: ${err.message}</td></tr>`;
             }
         }
 
+        async function populateAdminContentFilters() {
+            const gradeSelect = document.getElementById('admin-content-filter-grade');
+            const subjectSelect = document.getElementById('admin-content-filter-subject');
+            const teacherSelect = document.getElementById('admin-content-filter-teacher');
+            if (!gradeSelect || !subjectSelect || !teacherSelect) return;
+
+            const selectedGrade = gradeSelect.value;
+            const selectedSubject = subjectSelect.value;
+            const selectedTeacher = teacherSelect.value;
+
+            // Fetch system grades, subjects, and teachers if available
+            const [gradesRes, subjectsRes, teachersRes] = await Promise.allSettled([
+                apiRequest('/admin/grades'),
+                apiRequest('/subjects'),
+                apiRequest('/admin/teachers')
+            ]);
+
+            const gradesSet = new Set();
+            if (gradesRes.status === 'fulfilled' && gradesRes.value && gradesRes.value.data) {
+                gradesRes.value.data.forEach(g => {
+                    const val = g.name || g.grade_name || g.grade;
+                    if (val) gradesSet.add(String(val).trim());
+                });
+            }
+
+            const subjectsSet = new Set();
+            if (subjectsRes.status === 'fulfilled' && subjectsRes.value && subjectsRes.value.data) {
+                subjectsRes.value.data.forEach(s => {
+                    const val = s.subject_name || s.name;
+                    if (val) subjectsSet.add(String(val).trim());
+                });
+            }
+
+            const teachersSet = new Set();
+            if (teachersRes.status === 'fulfilled' && teachersRes.value && teachersRes.value.data) {
+                teachersRes.value.data.forEach(u => {
+                    const val = u.name || (u.user && u.user.name);
+                    if (val) teachersSet.add(String(val).trim());
+                });
+            }
+
+            // Also collect from actual materials and assignments data
+            [...adminMaterialsData, ...adminAssignmentsData].forEach(item => {
+                const g = item.subject?.grade || item.grade;
+                if (g) gradesSet.add(String(g).trim());
+
+                const s = item.subject?.subject_name || item.subject?.name || item.subject_name;
+                if (s) subjectsSet.add(String(s).trim());
+
+                const t = item.teacher?.user?.name || item.teacher?.name || item.teacher_name;
+                if (t) teachersSet.add(String(t).trim());
+            });
+
+            // Populate grades (sorted by grade number if possible)
+            const sortedGrades = Array.from(gradesSet).sort((a, b) => {
+                const numA = parseInt(String(a).replace(/\D+/g, '')) || 0;
+                const numB = parseInt(String(b).replace(/\D+/g, '')) || 0;
+                if (numA !== numB) return numA - numB;
+                return String(a).localeCompare(String(b));
+            });
+            gradeSelect.innerHTML = '<option value="">All Grades</option>' +
+                sortedGrades.map(g => `<option value="${g}">${g}</option>`).join('');
+            if (selectedGrade && sortedGrades.includes(selectedGrade)) {
+                gradeSelect.value = selectedGrade;
+            }
+
+            // Populate subjects (alphabetical)
+            const sortedSubjects = Array.from(subjectsSet).sort((a, b) => String(a).localeCompare(String(b)));
+            subjectSelect.innerHTML = '<option value="">All Subjects</option>' +
+                sortedSubjects.map(s => `<option value="${s}">${s}</option>`).join('');
+            if (selectedSubject && sortedSubjects.includes(selectedSubject)) {
+                subjectSelect.value = selectedSubject;
+            }
+
+            // Populate teachers (alphabetical)
+            const sortedTeachers = Array.from(teachersSet).sort((a, b) => String(a).localeCompare(String(b)));
+            teacherSelect.innerHTML = '<option value="">All Teachers</option>' +
+                sortedTeachers.map(t => `<option value="${t}">${t}</option>`).join('');
+            if (selectedTeacher && sortedTeachers.includes(selectedTeacher)) {
+                teacherSelect.value = selectedTeacher;
+            }
+        }
+
+        function filterAdminContent() {
+            renderAdminMaterials();
+            renderAdminAssignments();
+        }
+
         function renderAdminMaterials() {
-            const tbody  = document.getElementById('admin-materials-table-body');
-            const search = (document.getElementById('admin-materials-search')?.value || '').toLowerCase();
-            const type   = (document.getElementById('admin-materials-type')?.value || '');
+            const tbody   = document.getElementById('admin-materials-table-body');
+            if (!tbody) return;
+            const search  = (document.getElementById('admin-content-search')?.value || '').toLowerCase().trim();
+            const grade   = (document.getElementById('admin-content-filter-grade')?.value || '').trim();
+            const subject = (document.getElementById('admin-content-filter-subject')?.value || '').trim();
+            const teacher = (document.getElementById('admin-content-filter-teacher')?.value || '').trim();
+            const type    = (document.getElementById('admin-materials-type')?.value || '').trim();
 
             const filtered = adminMaterialsData.filter(m => {
-                const teacher = m.teacher?.user?.name || '';
-                const subject = m.subject?.name || '';
-                const matchSearch = !search ||
-                    teacher.toLowerCase().includes(search) ||
-                    subject.toLowerCase().includes(search) ||
-                    (m.title || '').toLowerCase().includes(search);
-                const matchType = !type || m.type === type;
-                return matchSearch && matchType;
+                const mTeacher = m.teacher?.user?.name || m.teacher?.name || '';
+                const mSubject = m.subject?.subject_name || m.subject?.name || '';
+                const mGrade   = m.subject?.grade || m.grade || '';
+                const mTitle   = m.title || '';
+                const mDesc    = m.description || '';
+
+                if (grade && !isExactGradeMatch(grade, mGrade) && grade.toLowerCase() !== mGrade.toLowerCase()) {
+                    return false;
+                }
+                if (subject && mSubject.toLowerCase() !== subject.toLowerCase()) {
+                    return false;
+                }
+                if (teacher && mTeacher.toLowerCase() !== teacher.toLowerCase()) {
+                    return false;
+                }
+                if (type && (m.type || '').toLowerCase() !== type.toLowerCase()) {
+                    return false;
+                }
+                if (search) {
+                    const match = mTeacher.toLowerCase().includes(search) ||
+                                  mSubject.toLowerCase().includes(search) ||
+                                  mGrade.toLowerCase().includes(search) ||
+                                  mTitle.toLowerCase().includes(search) ||
+                                  (m.topic || '').toLowerCase().includes(search) ||
+                                  mDesc.toLowerCase().includes(search);
+                    if (!match) return false;
+                }
+                return true;
             });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#697386;padding:30px;">No materials found.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#697386;padding:30px;">No materials match the selected filters.</td></tr>';
                 return;
             }
 
             const typeColors = { pdf:'#e53935', video:'#7b1fa2', image:'#0288d1', assignment:'#f57c00' };
 
             tbody.innerHTML = filtered.map(m => {
-                const teacher = m.teacher?.user?.name || '—';
-                const subject = m.subject?.name || '—';
-                const grade   = m.subject?.grade || '—';
+                const tName   = m.teacher?.user?.name || m.teacher?.name || '—';
+                const sName   = m.subject?.subject_name || m.subject?.name || '—';
+                const gName   = m.subject?.grade || m.grade || '—';
+                const topicName = m.topic || m.title || '—';
                 const typeBadge = `<span style="background:${typeColors[m.type] || '#697386'};color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;">${(m.type||'').toUpperCase()}</span>`;
                 const uploaded  = m.created_at ? new Date(m.created_at).toLocaleDateString() : '—';
                 const fileLink  = m.file_url
                     ? `<a href="${getFileUrl(m.file_url)}" target="_blank" style="color:#0077be;font-weight:600;font-size:12px;">View ↗</a>`
                     : '—';
                 return `<tr>
-                    <td style="font-weight:600;">${teacher}</td>
-                    <td>${subject}</td>
-                    <td>${grade}</td>
-                    <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${m.title}">${m.title}</td>
+                    <td style="font-weight:600;">${tName}</td>
+                    <td>${sName}</td>
+                    <td>${gName}</td>
+                    <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${topicName}">${topicName}</td>
                     <td>${typeBadge}</td>
                     <td>${uploaded}</td>
                     <td>${fileLink}</td>
+                    <td>
+                        <button class="btn-toggle-fee unpay" onclick="deleteAdminMaterial('${m.id}')" style="padding: 4px 10px; font-size: 11px; background: #ff4d4f; border: none; border-radius: 6px; color: white; cursor: pointer;">
+                            Delete
+                        </button>
+                    </td>
                 </tr>`;
             }).join('');
         }
 
         function renderAdminAssignments() {
-            const tbody  = document.getElementById('admin-assignments-table-body');
-            const search = (document.getElementById('admin-assignments-search')?.value || '').toLowerCase();
+            const tbody   = document.getElementById('admin-assignments-table-body');
+            if (!tbody) return;
+            const search  = (document.getElementById('admin-content-search')?.value || '').toLowerCase().trim();
+            const grade   = (document.getElementById('admin-content-filter-grade')?.value || '').trim();
+            const subject = (document.getElementById('admin-content-filter-subject')?.value || '').trim();
+            const teacher = (document.getElementById('admin-content-filter-teacher')?.value || '').trim();
 
             const filtered = adminAssignmentsData.filter(a => {
-                const teacher = a.teacher?.user?.name || '';
-                const subject = a.subject?.name || '';
-                return !search ||
-                    teacher.toLowerCase().includes(search) ||
-                    subject.toLowerCase().includes(search) ||
-                    (a.title || '').toLowerCase().includes(search);
+                const aTeacher = a.teacher?.user?.name || a.teacher?.name || '';
+                const aSubject = a.subject?.subject_name || a.subject?.name || '';
+                const aGrade   = a.subject?.grade || a.grade || '';
+                const aTitle   = a.title || '';
+                const aDesc    = a.description || '';
+
+                if (grade && !isExactGradeMatch(grade, aGrade) && grade.toLowerCase() !== aGrade.toLowerCase()) {
+                    return false;
+                }
+                if (subject && aSubject.toLowerCase() !== subject.toLowerCase()) {
+                    return false;
+                }
+                if (teacher && aTeacher.toLowerCase() !== teacher.toLowerCase()) {
+                    return false;
+                }
+                if (search) {
+                    const match = aTeacher.toLowerCase().includes(search) ||
+                                  aSubject.toLowerCase().includes(search) ||
+                                  aGrade.toLowerCase().includes(search) ||
+                                  aTitle.toLowerCase().includes(search) ||
+                                  (a.topic || '').toLowerCase().includes(search) ||
+                                  aDesc.toLowerCase().includes(search);
+                    if (!match) return false;
+                }
+                return true;
             });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#697386;padding:30px;">No assignments found.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#697386;padding:30px;">No assignments match the selected filters.</td></tr>';
                 return;
             }
 
             tbody.innerHTML = filtered.map(a => {
-                const teacher  = a.teacher?.user?.name || '—';
-                const subject  = a.subject?.name || '—';
-                const grade    = a.subject?.grade || '—';
+                const tName    = a.teacher?.user?.name || a.teacher?.name || '—';
+                const sName    = a.subject?.subject_name || a.subject?.name || '—';
+                const gName    = a.subject?.grade || a.grade || '—';
                 const dueDate  = a.due_date ? new Date(a.due_date).toLocaleDateString() : '—';
                 const marks    = a.total_marks != null ? a.total_marks : '—';
                 const uploaded = a.created_at ? new Date(a.created_at).toLocaleDateString() : '—';
@@ -8251,16 +9048,55 @@
                     ? `<a href="${getFileUrl(a.file_url)}" target="_blank" style="color:#0077be;font-weight:600;font-size:12px;">View ↗</a>`
                     : '—';
                 return `<tr>
-                    <td style="font-weight:600;">${teacher}</td>
-                    <td>${subject}</td>
-                    <td>${grade}</td>
+                    <td style="font-weight:600;">${tName}</td>
+                    <td>${sName}</td>
+                    <td>${gName}</td>
                     <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${a.title}">${a.title}</td>
                     <td>${dueDate}</td>
                     <td>${marks}</td>
                     <td>${uploaded}</td>
                     <td>${fileLink}</td>
+                    <td>
+                        <button class="btn-toggle-fee unpay" onclick="deleteAdminAssignment('${a.id}')" style="padding: 4px 10px; font-size: 11px; background: #ff4d4f; border: none; border-radius: 6px; color: white; cursor: pointer;">
+                            Delete
+                        </button>
+                    </td>
                 </tr>`;
             }).join('');
+        }
+
+        async function deleteAdminMaterial(id) {
+            if (!confirm('Are you sure you want to delete this material?')) return;
+            try {
+                if (String(id).startsWith('subject_')) {
+                    const subId = id.replace('subject_', '');
+                    const res = await apiRequest(`/subjects/${subId}?field=pdf`, { method: 'DELETE' });
+                    showToast(res.message || 'Material deleted successfully', 'success');
+                } else {
+                    const res = await apiRequest(`/materials/${id}`, { method: 'DELETE' });
+                    showToast(res.message || 'Material deleted successfully', 'success');
+                }
+                fetchAdminContent();
+            } catch (err) {
+                showToast(err.message || 'Failed to delete material', 'error');
+            }
+        }
+
+        async function deleteAdminAssignment(id) {
+            if (!confirm('Are you sure you want to delete this assignment?')) return;
+            try {
+                if (String(id).startsWith('subject_')) {
+                    const subId = id.replace('subject_', '');
+                    const res = await apiRequest(`/subjects/${subId}?field=assignment`, { method: 'DELETE' });
+                    showToast(res.message || 'Assignment deleted successfully', 'success');
+                } else {
+                    const res = await apiRequest(`/assignments/${id}`, { method: 'DELETE' });
+                    showToast(res.message || 'Assignment deleted successfully', 'success');
+                }
+                fetchAdminContent();
+            } catch (err) {
+                showToast(err.message || 'Failed to delete assignment', 'error');
+            }
         }
 
         function renderClassRankings() {
@@ -8272,20 +9108,9 @@
             const adminObj = JSON.parse(localStorage.getItem('admin_user') || '{}');
             const role = ((adminObj && adminObj.role) || localStorage.getItem('user_role') || 'teacher').toLowerCase();
 
-            if (role === 'teacher') {
-                const hasAssignedClass = (window.currentTeacherClassGrades && window.currentTeacherClassGrades.length > 0);
-                if (!hasAssignedClass) {
-                    tbody.innerHTML = `
-                        <tr>
-                            <td colspan="7" style="text-align: center; color: #697386; padding: 50px 20px;">
-                                <div style="font-size:36px; margin-bottom:10px;">🏆</div>
-                                <h3 style="margin:0 0 6px 0; color:#1a1f36; font-size:16px;">You do not have an assigned class</h3>
-                                <p style="margin:0; font-size:13px; color:#697386;">Please contact administration to assign you as a class teacher in Grades Management.</p>
-                            </td>
-                        </tr>
-                    `;
-                    return;
-                }
+            if (role !== 'admin') {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #697386; padding: 30px;">Class Rankings are accessible by administrators only.</td></tr>';
+                return;
             }
 
             if (!termFilter || !yearFilter || !gradeFilter) {
@@ -8298,13 +9123,7 @@
                 const matchesTerm = res.term === termFilter;
                 const matchesYear = String(res.academic_year) === yearFilter;
                 const matchesGrade = isExactGradeMatch(gradeFilter, res.student ? res.student.grade : null);
-                
-                let isTeacherGrade = true;
-                if (role === 'teacher' && window.currentTeacherClassGrades && window.currentTeacherClassGrades.length > 0) {
-                    isTeacherGrade = window.currentTeacherClassGrades.some(g => isExactGradeMatch(g, res.student ? res.student.grade : null));
-                }
-
-                return isTeacherGrade && matchesTerm && matchesYear && matchesGrade;
+                return matchesTerm && matchesYear && matchesGrade;
             });
 
             if (filteredResults.length === 0) {
@@ -8903,20 +9722,22 @@
             const role = (localStorage.getItem('user_role') || adminObj.role || 'teacher').toLowerCase();
 
             return examResultsData.filter(res => {
-                const studentName = (res.student && res.student.user ? res.student.user.name : '').toLowerCase();
-                
-                let isTeacherGrade = true;
-                if (role === 'teacher' && window.currentTeacherGrades && window.currentTeacherGrades.length > 0) {
-                    isTeacherGrade = window.currentTeacherGrades.some(g => isExactGradeMatch(g, res.student ? res.student.grade : null));
+                if (role === 'teacher') {
+                    if (!isExamResultAccessibleToTeacher(res)) {
+                        return false;
+                    }
                 }
 
+                const studentName = (res.student && res.student.user ? res.student.user.name : '').toLowerCase();
                 const matchesSearch = studentName.includes(searchVal);
                 const matchesClass = !classFilterVal || isExactGradeMatch(classFilterVal, res.student ? res.student.grade : null);
-                const matchesSubject = !subjectFilterVal || String(res.subject_id) === String(subjectFilterVal);
+                const matchesSubject = !subjectFilterVal || 
+                    String(res.subject_id) === String(subjectFilterVal) ||
+                    (res.subject && (String(res.subject.id) === String(subjectFilterVal) || (res.subject.subject_name && res.subject.subject_name.toLowerCase() === String(subjectFilterVal).toLowerCase())));
                 const matchesTerm = !termFilterVal || res.term === termFilterVal;
                 const matchesYear = !yearFilterVal || String(res.academic_year) === String(yearFilterVal);
 
-                return isTeacherGrade && matchesSearch && matchesClass && matchesSubject && matchesTerm && matchesYear;
+                return matchesSearch && matchesClass && matchesSubject && matchesTerm && matchesYear;
             });
         }
 
@@ -9245,14 +10066,35 @@
         }
 
         function getFilteredStudentAttendance() {
-            const search = (document.getElementById('attendance-search')?.value || '').toLowerCase();
+            const search = (document.getElementById('attendance-search')?.value || '').toLowerCase().trim();
+            const filterEl = document.getElementById('attendance-grade-filter');
+            const selectedGrade = filterEl ? (filterEl.value || '').trim() : '';
+
+            const adminObj = JSON.parse(localStorage.getItem('admin_user') || '{}');
+            const role = ((adminObj && adminObj.role) || localStorage.getItem('user_role') || 'admin').toLowerCase();
+
             return (attendanceData || []).filter(rec => {
                 const u = rec.user || {};
                 const student = u.student || {};
-                const matchesSearch = (u.name && u.name.toLowerCase().includes(search)) ||
+                const studentGrade = String(student.grade || '').trim();
+
+                if (role === 'teacher') {
+                    const assignedGrades = window.currentTeacherClassGrades || [];
+                    if (assignedGrades.length === 0) return false;
+                    const isAssigned = assignedGrades.some(g => isExactGradeMatch(g, studentGrade));
+                    if (!isAssigned) return false;
+                    if (selectedGrade && !isExactGradeMatch(selectedGrade, studentGrade)) return false;
+                } else if (selectedGrade) {
+                    if (!isExactGradeMatch(selectedGrade, studentGrade)) return false;
+                }
+
+                const gradeText = studentGrade ? ('grade ' + studentGrade.toLowerCase()) : '';
+                const matchesSearch = !search ||
+                                      (u.name && u.name.toLowerCase().includes(search)) ||
                                       (student.student_id && student.student_id.toLowerCase().includes(search)) ||
                                       (rec.date && rec.date.includes(search)) ||
-                                      (rec.status && rec.status.toLowerCase().includes(search));
+                                      (rec.status && rec.status.toLowerCase().includes(search)) ||
+                                      gradeText.includes(search);
                 return matchesSearch;
             });
         }
@@ -9765,8 +10607,8 @@
                         <tr>
                             <td colspan="10" style="text-align: center; color: #697386; padding: 50px 20px;">
                                 <div style="font-size:36px; margin-bottom:10px;">📚</div>
-                                <h3 style="margin:0 0 6px 0; color:#1a1f36; font-size:16px;">You do not have an assigned class</h3>
-                                <p style="margin:0; font-size:13px; color:#697386;">Please contact the school administrator to assign a class to you.</p>
+                                <h3 style="margin:0 0 6px 0; color:#1a1f36; font-size:16px;">You do not have an assigned class or subjects</h3>
+                                <p style="margin:0; font-size:13px; color:#697386;">Please contact the school administrator to assign a class or subjects to you.</p>
                             </td>
                         </tr>
                     `;
@@ -9775,28 +10617,22 @@
             }
 
             const filtered = examResultsData.filter(res => {
-                const studentName = (res.student && res.student.user ? res.student.user.name : '').toLowerCase();
-
-                let isTeacherGrade = true;
                 if (role === 'teacher') {
-                    const allowedGrades = (window.currentTeacherGrades && window.currentTeacherGrades.length > 0)
-                        ? window.currentTeacherGrades
-                        : (window.currentTeacherClassGrades || []);
-
-                    if (allowedGrades.length > 0) {
-                        isTeacherGrade = allowedGrades.some(g => isExactGradeMatch(g, res.student ? res.student.grade : null));
-                    } else {
-                        isTeacherGrade = true;
+                    if (!isExamResultAccessibleToTeacher(res)) {
+                        return false;
                     }
                 }
 
+                const studentName = (res.student && res.student.user ? res.student.user.name : '').toLowerCase();
                 const matchesSearch = studentName.includes(searchVal);
                 const matchesClass = !classFilterVal || isExactGradeMatch(classFilterVal, res.student ? res.student.grade : null);
-                const matchesSubject = !subjectFilterVal || String(res.subject_id) === String(subjectFilterVal);
+                const matchesSubject = !subjectFilterVal || 
+                    String(res.subject_id) === String(subjectFilterVal) ||
+                    (res.subject && (String(res.subject.id) === String(subjectFilterVal) || (res.subject.subject_name && res.subject.subject_name.toLowerCase() === String(subjectFilterVal).toLowerCase())));
                 const matchesTerm = !termFilterVal || res.term === termFilterVal;
                 const matchesYear = !yearFilterVal || String(res.academic_year) === String(yearFilterVal);
 
-                return isTeacherGrade && matchesSearch && matchesClass && matchesSubject && matchesTerm && matchesYear;
+                return matchesSearch && matchesClass && matchesSubject && matchesTerm && matchesYear;
             });
 
             if (filtered.length === 0) {
@@ -10030,6 +10866,7 @@
 
                 const subjectsRes = await apiRequest('/subjects');
                 const subjectsData = (subjectsRes && subjectsRes.success && Array.isArray(subjectsRes.data)) ? subjectsRes.data : [];
+                window.allSubjectsData = subjectsData;
                 if (valUsersEl) valUsersEl.innerText = subjectsData.length;
 
                 const isMyTimetable = (t) => {
@@ -10037,7 +10874,7 @@
                     return userId && t.grade.toLowerCase().includes(`teacher:${userId}`);
                 };
 
-                const subsRes = await apiRequest('/subject-submissions');
+                const subsRes = await apiRequest(`/subject-submissions?teacher_id=${teacherId || ''}&user_id=${userId || ''}`);
                 const subsCount = (subsRes && subsRes.success && Array.isArray(subsRes.data)) ? subsRes.data.length : 0;
                 if (valTeachersEl) valTeachersEl.innerText = subsCount;
 
@@ -10140,6 +10977,7 @@
 
                 // Filter grades for teacher
                 window.currentTeacherClassGrades = Array.from(classTeacherGradeSet);
+                window.currentTeacherGradeSubjectsMap = gradeToSubjectsMap;
 
                 let teacherGrades = [];
                 if (role === 'teacher') {
@@ -10434,7 +11272,9 @@
 
             if (role.toLowerCase() === 'student') {
                 payload.grade = document.getElementById('student-grade').value;
-                payload.class = document.getElementById('student-class') ? document.getElementById('student-class').value : 'A';
+                if (document.getElementById('student-class')) {
+                    payload.class = document.getElementById('student-class').value;
+                }
                 payload.parent_name = document.getElementById('student-parent-name').value.trim();
                 payload.parent_email = document.getElementById('student-parent-email').value.trim();
                 payload.parent_phone = document.getElementById('student-parent-phone').value.trim();
@@ -10899,6 +11739,751 @@
             } catch (err) {
                 showToast(err.message || 'Action failed.', 'error');
             }
+        }
+
+        // ==========================================
+        // AI PERFORMANCE INSIGHTS LOGIC
+        // ==========================================
+        let currentAiPerfReports = [];
+        let currentAiPerfStudent = null;
+        let currentAiActiveReport = null;
+
+        async function initAiPerformanceView() {
+            const adminObj = JSON.parse(localStorage.getItem('admin_user') || '{}');
+            const role = ((adminObj && adminObj.role) || localStorage.getItem('user_role') || 'admin').toLowerCase();
+
+            const gradeSelect = document.getElementById('ai-perf-grade');
+            const studentSelect = document.getElementById('ai-perf-student');
+            const generateBtn = document.getElementById('ai-perf-generate-btn');
+            const printBtn = document.getElementById('ai-perf-print-btn');
+            const emptyState = document.getElementById('ai-perf-empty-state');
+            const loadingState = document.getElementById('ai-perf-loading-state');
+            const contentState = document.getElementById('ai-perf-content-state');
+
+            if (!gradeSelect) return;
+
+            // Reset UI to default empty state
+            gradeSelect.innerHTML = '<option value="">Select Grade</option>';
+            studentSelect.innerHTML = '<option value="">Select Student</option>';
+            studentSelect.disabled = true;
+            generateBtn.disabled = true;
+            if (printBtn) printBtn.classList.add('hidden');
+            emptyState.classList.remove('hidden');
+            loadingState.classList.add('hidden');
+            contentState.classList.add('hidden');
+            contentState.innerHTML = '';
+
+            let availableGrades = [];
+
+            if (role === 'teacher') {
+                if (!window.currentTeacherGrades || window.currentTeacherGrades.length === 0) {
+                    await setupTeacherDashboard(adminObj);
+                }
+                if (window.currentTeacherGrades && window.currentTeacherGrades.length > 0) {
+                    availableGrades = window.currentTeacherGrades;
+                } else if (window.currentTeacherClassGrades && window.currentTeacherClassGrades.length > 0) {
+                    availableGrades = window.currentTeacherClassGrades;
+                }
+            } else {
+                // Admin: all grades
+                if (!gradesData || gradesData.length === 0) {
+                    try {
+                        const gRes = await apiRequest('/admin/grades');
+                        if (gRes.success && Array.isArray(gRes.data)) gradesData = gRes.data;
+                    } catch(e) {}
+                }
+                const gradeSet = new Set();
+                if (gradesData && gradesData.length > 0) {
+                    gradesData.forEach(g => {
+                        const raw = (g.name || '').replace(/Grade /i, '').trim();
+                        if (raw) gradeSet.add(raw);
+                    });
+                }
+                for (let i = 1; i <= 12; i++) gradeSet.add(String(i));
+                availableGrades = Array.from(gradeSet).sort((a, b) => parseInt(a) - parseInt(b)).map(g => `Grade ${g}`);
+            }
+
+            availableGrades.forEach(gName => {
+                const opt = document.createElement('option');
+                const rawVal = gName.replace(/Grade /i, '').trim();
+                opt.value = rawVal;
+                opt.textContent = gName.toLowerCase().startsWith('grade') ? gName : `Grade ${gName}`;
+                gradeSelect.appendChild(opt);
+            });
+        }
+
+        async function onAiPerfGradeChanged() {
+            const gradeSelect = document.getElementById('ai-perf-grade');
+            const studentSelect = document.getElementById('ai-perf-student');
+            const generateBtn = document.getElementById('ai-perf-generate-btn');
+            const printBtn = document.getElementById('ai-perf-print-btn');
+            const emptyState = document.getElementById('ai-perf-empty-state');
+            const contentState = document.getElementById('ai-perf-content-state');
+
+            const selectedGrade = gradeSelect ? (gradeSelect.value || '').trim() : '';
+
+            // Reset student and report state
+            studentSelect.innerHTML = '<option value="">Select Student</option>';
+            studentSelect.disabled = true;
+            generateBtn.disabled = true;
+            if (printBtn) printBtn.classList.add('hidden');
+            emptyState.classList.remove('hidden');
+            contentState.classList.add('hidden');
+            contentState.innerHTML = '';
+
+            if (!selectedGrade) return;
+
+            studentSelect.innerHTML = '<option value="">Loading students...</option>';
+
+            try {
+                if (!examStudentsLoaded || !examStudentsList || examStudentsList.length === 0) {
+                    const usersRes = await apiRequest('/admin/users?all=true');
+                    if (usersRes.success && Array.isArray(usersRes.data)) {
+                        examStudentsList = usersRes.data.filter(u => u.role && u.role.toLowerCase() === 'student' && u.student);
+                        examStudentsLoaded = true;
+                    }
+                }
+
+                const studentsInGrade = (examStudentsList || []).filter(u => {
+                    const stGrade = u.student ? String(u.student.grade || '').trim() : '';
+                    return isExactGradeMatch(selectedGrade, stGrade);
+                });
+
+                studentSelect.innerHTML = `<option value="">Select Student (${studentsInGrade.length})</option>`;
+                if (studentsInGrade.length === 0) {
+                    studentSelect.innerHTML = '<option value="">No students found in this grade</option>';
+                    studentSelect.disabled = true;
+                    return;
+                }
+
+                studentsInGrade.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+                studentsInGrade.forEach(u => {
+                    const opt = document.createElement('option');
+                    opt.value = u.student.id;
+                    opt.textContent = `${u.name} (${u.student.student_id || ('#' + u.id)})`;
+                    opt.dataset.userName = u.name;
+                    opt.dataset.grade = u.student.grade || selectedGrade;
+                    studentSelect.appendChild(opt);
+                });
+
+                studentSelect.disabled = false;
+            } catch (err) {
+                studentSelect.innerHTML = '<option value="">Failed to load students</option>';
+            }
+        }
+
+        async function onAiPerfStudentChanged() {
+            const studentSelect = document.getElementById('ai-perf-student');
+            const generateBtn = document.getElementById('ai-perf-generate-btn');
+            const emptyState = document.getElementById('ai-perf-empty-state');
+            const contentState = document.getElementById('ai-perf-content-state');
+            const printBtn = document.getElementById('ai-perf-print-btn');
+
+            const studentId = studentSelect ? (studentSelect.value || '').trim() : '';
+
+            if (!studentId) {
+                generateBtn.disabled = true;
+                if (printBtn) printBtn.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                contentState.classList.add('hidden');
+                return;
+            }
+
+            generateBtn.disabled = false;
+            await loadAiPerformanceReport(studentId);
+        }
+
+        function onAiPerfFiltersChanged() {
+            const studentSelect = document.getElementById('ai-perf-student');
+            if (studentSelect && studentSelect.value) {
+                // User can click Generate Report with the updated filters
+            }
+        }
+
+        async function loadAiPerformanceReport(studentId) {
+            const emptyState = document.getElementById('ai-perf-empty-state');
+            const loadingState = document.getElementById('ai-perf-loading-state');
+            const contentState = document.getElementById('ai-perf-content-state');
+            const printBtn = document.getElementById('ai-perf-print-btn');
+
+            emptyState.classList.add('hidden');
+            contentState.classList.add('hidden');
+            loadingState.classList.remove('hidden');
+            if (printBtn) printBtn.classList.add('hidden');
+
+            try {
+                const res = await apiRequest(`/ai-performance/reports/${studentId}`);
+                loadingState.classList.add('hidden');
+
+                if (res.success && res.data) {
+                    currentAiPerfReports = res.data.history || [];
+                    currentAiPerfStudent = res.data.student;
+
+                    if (res.data.latest) {
+                        currentAiActiveReport = res.data.latest;
+                        renderAiPerformanceReport(res.data.latest, res.data.student, res.data.history);
+                    } else {
+                        // No reports yet for this student
+                        currentAiActiveReport = null;
+                        renderNoReportState(res.data.student);
+                    }
+                } else {
+                    renderNoReportState();
+                }
+            } catch (err) {
+                loadingState.classList.add('hidden');
+                showToast(err.message || 'Failed to fetch student AI report.', 'error');
+                emptyState.classList.remove('hidden');
+            }
+        }
+
+        function renderNoReportState(studentObj = null) {
+            const contentState = document.getElementById('ai-perf-content-state');
+            const printBtn = document.getElementById('ai-perf-print-btn');
+            if (printBtn) printBtn.classList.add('hidden');
+
+            const sName = studentObj ? studentObj.name : 'this student';
+            contentState.innerHTML = `
+                <div class="glass-card" style="text-align: center; padding: 50px 20px; background: rgba(255,255,255,0.7); border-radius: 16px; border: 1.5px dashed #cbd5e1;">
+                    <div style="font-size: 40px; margin-bottom: 12px;">📊</div>
+                    <h3 style="color: #1e293b; font-size: 17px; margin: 0 0 6px 0; font-weight: 700;">No AI Report Generated Yet</h3>
+                    <p style="color: #64748b; font-size: 13px; max-width: 450px; margin: 0 auto 20px auto; line-height: 1.5;">
+                        No previous evaluation exists for <strong>${sName}</strong>. Click below to analyze exam results and homework records with Smart School AI.
+                    </p>
+                    <button class="btn-toggle-fee pay" onclick="triggerGenerateAiReport()" style="padding: 11px 24px; font-weight: 700; font-size: 13px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%); border: none; border-radius: 8px; color: white; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(99,102,241,0.35);">
+                        <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>
+                        Generate Initial AI Report
+                    </button>
+                </div>
+            `;
+            contentState.classList.remove('hidden');
+        }
+
+        async function triggerGenerateAiReport() {
+            const studentSelect = document.getElementById('ai-perf-student');
+            const yearSelect = document.getElementById('ai-perf-year');
+            const termSelect = document.getElementById('ai-perf-term');
+            const generateBtn = document.getElementById('ai-perf-generate-btn');
+            const loadingState = document.getElementById('ai-perf-loading-state');
+            const contentState = document.getElementById('ai-perf-content-state');
+            const emptyState = document.getElementById('ai-perf-empty-state');
+            const printBtn = document.getElementById('ai-perf-print-btn');
+
+            const studentId = studentSelect ? studentSelect.value : '';
+            const year = yearSelect ? yearSelect.value : '2026';
+            const term = termSelect ? termSelect.value : 'All Terms';
+
+            if (!studentId) {
+                showToast('Please select a student first.', 'error');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            contentState.classList.add('hidden');
+            loadingState.classList.remove('hidden');
+            if (printBtn) printBtn.classList.add('hidden');
+
+            const origText = generateBtn.innerHTML;
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = `
+                <div class="spinner" style="width:14px; height:14px; border-width:2px; border-color:white; border-top-color:transparent; border-radius:50%; animation:spin 1s linear infinite; display:inline-block;"></div>
+                <span>Generating...</span>
+            `;
+
+            try {
+                const res = await apiRequest('/ai-performance/generate', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        student_id: studentId,
+                        academic_year: year,
+                        term: term
+                    })
+                });
+
+                if (res.success && res.data) {
+                    showToast('AI Performance Report generated successfully!', 'success');
+                    await loadAiPerformanceReport(studentId);
+                } else {
+                    showToast(res.message || 'Failed to generate report.', 'error');
+                    loadingState.classList.add('hidden');
+                    if (currentAiActiveReport) {
+                        contentState.classList.remove('hidden');
+                    } else {
+                        renderNoReportState(currentAiPerfStudent);
+                    }
+                }
+            } catch (err) {
+                loadingState.classList.add('hidden');
+                showToast(err.message || 'Failed to connect to AI service.', 'error');
+                if (currentAiActiveReport) {
+                    contentState.classList.remove('hidden');
+                } else {
+                    emptyState.classList.remove('hidden');
+                }
+            } finally {
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = origText;
+            }
+        }
+
+        function switchAiReportHistory(reportId) {
+            const report = currentAiPerfReports.find(r => r.id === reportId);
+            if (report) {
+                currentAiActiveReport = report;
+                renderAiPerformanceReport(report, currentAiPerfStudent, currentAiPerfReports);
+            }
+        }
+
+        function renderAiPerformanceReport(report, studentObj, history = []) {
+            const contentState = document.getElementById('ai-perf-content-state');
+            const printBtn = document.getElementById('ai-perf-print-btn');
+            const downloadBtn = document.getElementById('ai-perf-download-btn');
+            if (printBtn) printBtn.classList.remove('hidden');
+            if (downloadBtn) downloadBtn.classList.remove('hidden');
+
+            currentAiActiveReport = report;
+
+            const sName = studentObj ? studentObj.name : 'Student';
+            const sId = studentObj ? (studentObj.student_id || ('#' + studentObj.id)) : '—';
+            const sGrade = studentObj ? ('Grade ' + String(studentObj.grade || '').replace(/Grade /i, '')) : '—';
+            const year = report.academic_year || '2026';
+            const term = report.term || 'All Terms';
+            const generatedDate = report.created_at ? new Date(report.created_at).toLocaleString() : 'Recently';
+
+            const metrics = report.metrics || {};
+            const avg = metrics.average_marks !== null && metrics.average_marks !== undefined ? `${metrics.average_marks}%` : 'N/A';
+            const totalExams = metrics.total_exams || 0;
+            const assignments = metrics.total_assignments_submitted || 0;
+            const attendance = metrics.attendance_percentage !== null && metrics.attendance_percentage !== undefined ? `${metrics.attendance_percentage}%` : 'N/A';
+
+            // Strengths list
+            const strengths = Array.isArray(report.strengths) ? report.strengths : [];
+            const strengthsHtml = strengths.map(st => `
+                <div style="display: flex; gap: 10px; align-items: flex-start; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 12px 15px; margin-bottom: 8px;">
+                    <span style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:#22c55e; color:white; font-size:12px; font-weight:bold; flex-shrink:0;">✓</span>
+                    <span style="font-size: 13.5px; color: #15803d; line-height: 1.5; font-weight: 500;">${st}</span>
+                </div>
+            `).join('') || '<p style="color:#64748b; font-size:13px; margin:0;">No specific strengths recorded.</p>';
+
+            // Weaknesses list
+            const weaknesses = Array.isArray(report.weaknesses) ? report.weaknesses : [];
+            const weaknessesHtml = weaknesses.map(wk => `
+                <div style="display: flex; gap: 10px; align-items: flex-start; background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 12px 15px; margin-bottom: 8px;">
+                    <span style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:#f59e0b; color:white; font-size:12px; font-weight:bold; flex-shrink:0;">!</span>
+                    <span style="font-size: 13.5px; color: #b45309; line-height: 1.5; font-weight: 500;">${wk}</span>
+                </div>
+            `).join('') || '<p style="color:#64748b; font-size:13px; margin:0;">No specific weak areas flagged.</p>';
+
+            // Improvement Suggestions
+            const suggestions = Array.isArray(report.improvement_suggestions) ? report.improvement_suggestions : [];
+            const suggestionsHtml = suggestions.map((sug, idx) => `
+                <div style="display: flex; gap: 12px; align-items: flex-start; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;">
+                    <span style="display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:#3b82f6; color:white; font-size:12px; font-weight:700; flex-shrink:0;">${idx + 1}</span>
+                    <span style="font-size: 13.5px; color: #334155; line-height: 1.5;">${sug}</span>
+                </div>
+            `).join('') || '<p style="color:#64748b; font-size:13px; margin:0;">No specific recommendations recorded.</p>';
+
+            // History selector tabs
+            let historyTabsHtml = '';
+            if (history && history.length > 1) {
+                historyTabsHtml = `
+                    <div style="margin-bottom: 20px; background: white; padding: 12px 16px; border-radius: 12px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <span style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase;">Previous Reports:</span>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            ${history.map((h, i) => {
+                                const isCurrent = h.id === report.id;
+                                const dateStr = h.created_at ? new Date(h.created_at).toLocaleDateString() : `#${h.id}`;
+                                const activeStyle = isCurrent 
+                                    ? 'background: #6366f1; color: white; border-color: #6366f1;' 
+                                    : 'background: #f8fafc; color: #475569; border-color: #cbd5e1;';
+                                return `
+                                    <button onclick="switchAiReportHistory(${h.id})" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid; ${activeStyle} transition: all 0.2s;">
+                                        ${i === 0 ? '★ Latest' : `Report ${dateStr}`}
+                                    </button>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            contentState.innerHTML = `
+                ${historyTabsHtml}
+
+                <!-- TOP PROFILE BANNER -->
+                <div class="glass-card" style="margin-bottom: 20px; padding: 22px 25px; border-radius: 16px; background: linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(139,92,246,0.08) 50%, rgba(217,70,239,0.08) 100%); border: 1.5px solid rgba(99,102,241,0.2);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div style="width: 54px; height: 54px; border-radius: 16px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 4px 12px rgba(99,102,241,0.3);">
+                                🎓
+                            </div>
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                    <h2 style="margin: 0; font-size: 20px; color: #0f172a; font-weight: 700;">${sName}</h2>
+                                    <span style="padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; background: #e0e7ff; color: #4338ca;">${sId}</span>
+                                    <span style="padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; background: #f1f5f9; color: #334155;">${sGrade}</span>
+                                </div>
+                                <div style="margin-top: 5px; font-size: 13px; color: #64748b; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                                    <span>📅 Academic Year: <strong>${year}</strong></span>
+                                    <span>•</span>
+                                    <span>🏷️ Period: <strong>${term}</strong></span>
+                                    <span>•</span>
+                                    <span>🕒 Evaluated: <strong>${generatedDate}</strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <button onclick="downloadAiPerformancePdf()" style="padding: 8px 16px; font-size: 12px; font-weight: 700; border-radius: 8px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(99,102,241,0.25); transition: all 0.2s;">
+                                <svg style="width:15px; height:15px; fill:currentColor;" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                                <span>Download PDF</span>
+                            </button>
+                            <button onclick="printAiPerformanceReport()" style="padding: 8px 16px; font-size: 12px; font-weight: 700; border-radius: 8px; background: white; color: #0077be; border: 1.5px solid #bce3fb; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); transition: all 0.2s;">
+                                <svg style="width:15px; height:15px; fill:currentColor;" viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+                                <span>Print / Save PDF</span>
+                            </button>
+                            <button class="btn-toggle-fee pay" onclick="triggerGenerateAiReport()" style="padding: 8px 16px; font-size: 12px; font-weight: 700; border-radius: 8px; background: white; color: #6366f1; border: 1.5px solid #c7d2fe; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
+                                <span>↻ Re-evaluate &amp; Update</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KEY METRIC CARDS -->
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 20px;">
+                    <div class="glass-card" style="padding: 18px 22px; background: white; border-radius: 12px; border: 1px solid #e2e8f0; border-left: 4px solid #0077be;">
+                        <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Total Exams</span>
+                        <div style="font-size: 26px; font-weight: 800; color: #1e293b; margin-top: 4px;">${totalExams}</div>
+                        <span style="font-size: 12px; color: #64748b;">Subjects evaluated</span>
+                    </div>
+                    <div class="glass-card" style="padding: 18px 22px; background: white; border-radius: 12px; border: 1px solid #e2e8f0; border-left: 4px solid #10b981;">
+                        <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Assignments</span>
+                        <div style="font-size: 26px; font-weight: 800; color: #1e293b; margin-top: 4px;">${assignments}</div>
+                        <span style="font-size: 12px; color: #64748b;">Tasks submitted</span>
+                    </div>
+                </div>
+
+                <!-- OVERALL PERFORMANCE & GROWTH GRID -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <!-- Overall Performance -->
+                    <div class="glass-card" style="padding: 22px 24px; background: white; border-radius: 14px; border: 1px solid #e2e8f0;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                            <span style="font-size: 18px;">📋</span>
+                            <h3 style="margin: 0; font-size: 16px; color: #1e293b; font-weight: 700;">Overall Academic Performance</h3>
+                        </div>
+                        <p style="font-size: 14px; color: #334155; line-height: 1.6; margin: 0; white-space: pre-line;">
+                            ${report.overall_performance || 'No detailed evaluation recorded.'}
+                        </p>
+                    </div>
+
+                    <!-- Growth & Progress Trajectory -->
+                    <div class="glass-card" style="padding: 22px 24px; background: white; border-radius: 14px; border: 1px solid #e2e8f0;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                            <span style="font-size: 18px;">📈</span>
+                            <h3 style="margin: 0; font-size: 16px; color: #1e293b; font-weight: 700;">Growth &amp; Progress Trajectory</h3>
+                        </div>
+                        <p style="font-size: 14px; color: #334155; line-height: 1.6; margin: 0;">
+                            ${report.growth_progress || 'Performance trajectory remains stable across evaluated terms.'}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- STRENGTHS & WEAKNESSES GRID -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <!-- Key Strengths -->
+                    <div class="glass-card" style="padding: 22px 24px; background: white; border-radius: 14px; border: 1px solid #e2e8f0;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+                            <span style="font-size: 18px;">🌟</span>
+                            <h3 style="margin: 0; font-size: 16px; color: #166534; font-weight: 700;">Academic Strengths</h3>
+                        </div>
+                        ${strengthsHtml}
+                    </div>
+
+                    <!-- Focus Areas / Weaknesses -->
+                    <div class="glass-card" style="padding: 22px 24px; background: white; border-radius: 14px; border: 1px solid #e2e8f0;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+                            <span style="font-size: 18px;">🎯</span>
+                            <h3 style="margin: 0; font-size: 16px; color: #9a3412; font-weight: 700;">Areas for Improvement</h3>
+                        </div>
+                        ${weaknessesHtml}
+                    </div>
+                </div>
+
+                <!-- IMPROVEMENT SUGGESTIONS -->
+                <div class="glass-card" style="padding: 22px 24px; background: white; border-radius: 14px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+                        <span style="font-size: 18px;">💡</span>
+                        <h3 style="margin: 0; font-size: 16px; color: #1d4ed8; font-weight: 700;">Actionable Improvement Guidance</h3>
+                    </div>
+                    ${suggestionsHtml}
+                </div>
+
+                <!-- CLOSING SUMMARY -->
+                ${report.summary ? `
+                    <div class="glass-card" style="padding: 18px 22px; background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(217,70,239,0.06)); border-radius: 12px; border: 1px dashed rgba(99,102,241,0.3); text-align: center;">
+                        <span style="font-size: 12px; font-weight: 700; color: #6366f1; text-transform: uppercase;">Counselor Summary</span>
+                        <p style="font-size: 14px; color: #334155; margin: 6px 0 0 0; font-style: italic;">
+                            "${report.summary}"
+                        </p>
+                    </div>
+                ` : ''}
+            `;
+
+            contentState.classList.remove('hidden');
+        }
+
+        function setAiPerfActionButtonsVisible(visible) {
+            const printBtn = document.getElementById('ai-perf-print-btn');
+            const downloadBtn = document.getElementById('ai-perf-download-btn');
+            if (printBtn) {
+                if (visible) printBtn.classList.remove('hidden');
+                else printBtn.classList.add('hidden');
+            }
+            if (downloadBtn) {
+                if (visible) downloadBtn.classList.remove('hidden');
+                else downloadBtn.classList.add('hidden');
+            }
+        }
+
+        function generateAiReportHtml(report, studentObj) {
+            const sName = studentObj.name || 'Student';
+            const sId = studentObj.student_id || ('#' + studentObj.id);
+            const sGrade = 'Grade ' + String(studentObj.grade || '').replace(/Grade /i, '');
+            const sClass = studentObj.class ? `Class ${studentObj.class}` : '';
+            const gradeDisplay = [sGrade, sClass].filter(Boolean).join(' - ');
+            const year = report.academic_year || '2026';
+            const term = report.term || 'All Terms';
+            const metrics = report.metrics || {};
+            const avg = metrics.average_marks !== null && metrics.average_marks !== undefined ? `${metrics.average_marks}%` : 'N/A';
+            const totalExams = metrics.total_exams || 0;
+            const assignments = metrics.total_assignments_submitted || 0;
+            const attendance = metrics.attendance_percentage !== null && metrics.attendance_percentage !== undefined ? `${metrics.attendance_percentage}%` : 'N/A';
+
+            const strengths = Array.isArray(report.strengths) ? report.strengths : [];
+            const weaknesses = Array.isArray(report.weaknesses) ? report.weaknesses : [];
+            const suggestions = Array.isArray(report.improvement_suggestions) ? report.improvement_suggestions : [];
+
+            return `
+                <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; padding: 28px 32px; font-size: 13px; line-height: 1.55; background: #ffffff; max-width: 800px; margin: 0 auto; box-sizing: border-box;">
+                    <!-- HEADER -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #6366f1; padding-bottom: 14px; margin-bottom: 20px;">
+                        <div>
+                            <div style="font-size: 24px; font-weight: 800; color: #4338ca; letter-spacing: -0.5px;">Smart School</div>
+                            <div style="font-size: 12px; color: #64748b; font-weight: 600; margin-top: 2px;">AI-Powered Student Academic Performance Report</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 10px; color: #94a3b8; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Evaluation Date</div>
+                            <div style="font-size: 13px; font-weight: 700; color: #1e293b; margin-top: 2px;">${new Date(report.created_at || Date.now()).toLocaleDateString()}</div>
+                        </div>
+                    </div>
+
+                    <!-- STUDENT META INFO -->
+                    <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 12px; font-size: 13px;">
+                        <div>
+                            <span style="color:#64748b; font-size:10px; display:block; font-weight:700; text-transform:uppercase; letter-spacing: 0.5px;">Student Name</span>
+                            <strong style="color: #0f172a; font-size: 14px;">${sName}</strong> <span style="color:#6366f1; font-weight:700; font-size:12px;">(${sId})</span>
+                        </div>
+                        <div>
+                            <span style="color:#64748b; font-size:10px; display:block; font-weight:700; text-transform:uppercase; letter-spacing: 0.5px;">Grade / Class</span>
+                            <strong style="color: #0f172a;">${gradeDisplay}</strong>
+                        </div>
+                        <div>
+                            <span style="color:#64748b; font-size:10px; display:block; font-weight:700; text-transform:uppercase; letter-spacing: 0.5px;">Academic Year</span>
+                            <strong style="color: #0f172a;">${year}</strong>
+                        </div>
+                        <div>
+                            <span style="color:#64748b; font-size:10px; display:block; font-weight:700; text-transform:uppercase; letter-spacing: 0.5px;">Evaluation Period</span>
+                            <strong style="color: #0f172a;">${term}</strong>
+                        </div>
+                    </div>
+
+                    <!-- KEY KPI CARDS -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px;">
+                        <div style="border: 1px solid #e2e8f0; border-top: 3.5px solid #0077be; border-radius: 8px; padding: 12px 16px; text-align: center; background: #fff;">
+                            <div style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase;">Total Exams</div>
+                            <div style="font-size: 22px; font-weight: 800; color: #1e293b; margin-top: 3px;">${totalExams}</div>
+                            <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Subjects Evaluated</div>
+                        </div>
+                        <div style="border: 1px solid #e2e8f0; border-top: 3.5px solid #10b981; border-radius: 8px; padding: 12px 16px; text-align: center; background: #fff;">
+                            <div style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase;">Assignments</div>
+                            <div style="font-size: 22px; font-weight: 800; color: #1e293b; margin-top: 3px;">${assignments}</div>
+                            <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Tasks Submitted</div>
+                        </div>
+                    </div>
+
+                    <!-- 1. OVERALL PERFORMANCE -->
+                    <div style="margin-bottom: 20px;">
+                        <div style="font-size: 13.5px; font-weight: 700; color: #1e293b; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                            <span>📋</span> <span>1. Overall Academic Standing &amp; Evaluation</span>
+                        </div>
+                        <p style="margin: 0; color: #334155; line-height: 1.6; white-space: pre-line;">${report.overall_performance || '—'}</p>
+                    </div>
+
+                    <!-- 2. GROWTH & PROGRESS -->
+                    <div style="margin-bottom: 20px;">
+                        <div style="font-size: 13.5px; font-weight: 700; color: #1e293b; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                            <span>📈</span> <span>2. Growth &amp; Performance Trajectory</span>
+                        </div>
+                        <p style="margin: 0; color: #334155; line-height: 1.6;">${report.growth_progress || '—'}</p>
+                    </div>
+
+                    <!-- 3. STRENGTHS -->
+                    <div style="margin-bottom: 20px;">
+                        <div style="font-size: 13.5px; font-weight: 700; color: #1e293b; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                            <span>🌟</span> <span>3. Key Academic Strengths</span>
+                        </div>
+                        ${strengths.length > 0 ? strengths.map(s => `
+                            <div style="display: flex; gap: 10px; align-items: flex-start; padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; background: #f0fdf4; border-left: 3.5px solid #22c55e; color: #15803d; font-size: 12.5px;">
+                                <span style="font-weight: bold; flex-shrink: 0;">✓</span>
+                                <span style="line-height: 1.5;">${s}</span>
+                            </div>
+                        `).join('') : '<p style="color:#64748b; font-size:12.5px; margin:0;">—</p>'}
+                    </div>
+
+                    <!-- 4. WEAKNESSES -->
+                    <div style="margin-bottom: 20px;">
+                        <div style="font-size: 13.5px; font-weight: 700; color: #1e293b; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                            <span>🎯</span> <span>4. Areas Requiring Focus &amp; Improvement</span>
+                        </div>
+                        ${weaknesses.length > 0 ? weaknesses.map(w => `
+                            <div style="display: flex; gap: 10px; align-items: flex-start; padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; background: #fffbeb; border-left: 3.5px solid #f59e0b; color: #b45309; font-size: 12.5px;">
+                                <span style="font-weight: bold; flex-shrink: 0;">!</span>
+                                <span style="line-height: 1.5;">${w}</span>
+                            </div>
+                        `).join('') : '<p style="color:#64748b; font-size:12.5px; margin:0;">—</p>'}
+                    </div>
+
+                    <!-- 5. SUGGESTIONS -->
+                    <div style="margin-bottom: 20px;">
+                        <div style="font-size: 13.5px; font-weight: 700; color: #1e293b; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                            <span>💡</span> <span>5. Actionable Guidance for Student &amp; Parents</span>
+                        </div>
+                        ${suggestions.length > 0 ? suggestions.map((sg, i) => `
+                            <div style="display: flex; gap: 10px; align-items: flex-start; padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; background: #f8fafc; border-left: 3.5px solid #3b82f6; color: #1e293b; font-size: 12.5px;">
+                                <span style="font-weight: 700; color: #2563eb; flex-shrink: 0;">${i + 1}.</span>
+                                <span style="line-height: 1.5;">${sg}</span>
+                            </div>
+                        `).join('') : '<p style="color:#64748b; font-size:12.5px; margin:0;">—</p>'}
+                    </div>
+
+                    <!-- SUMMARY -->
+                    ${report.summary ? `
+                        <div style="background: #f8fafc; padding: 12px 16px; border-radius: 8px; border: 1px dashed #cbd5e1; margin-bottom: 22px;">
+                            <strong style="color: #4338ca; font-size: 12px; text-transform: uppercase;">Counselor Summary:</strong>
+                            <div style="color: #334155; font-style: italic; margin-top: 4px; font-size: 13px; line-height: 1.5;">"${report.summary}"</div>
+                        </div>
+                    ` : ''}
+
+                    <!-- FOOTER -->
+                    <div style="margin-top: 25px; border-top: 1px solid #e2e8f0; padding-top: 12px; font-size: 11px; color: #94a3b8; text-align: center;">
+                        Generated with Smart School AI Academic Intelligence System &bull; Official Confidential School Document
+                    </div>
+                </div>
+            `;
+        }
+
+        async function ensureHtml2PdfLoaded() {
+            if (typeof html2pdf !== 'undefined') return true;
+            return new Promise((resolve) => {
+                const script = document.createElement('script');
+                script.src = '/js/html2pdf.bundle.min.js';
+                script.onload = () => resolve(true);
+                script.onerror = () => resolve(false);
+                document.head.appendChild(script);
+            });
+        }
+
+        async function downloadAiPerformancePdf() {
+            if (!currentAiActiveReport) {
+                showToast('No active report to download.', 'error');
+                return;
+            }
+            const report = currentAiActiveReport;
+            const studentObj = currentAiPerfStudent || {};
+            const rawName = studentObj.name || 'Student';
+            const cleanName = rawName.replace(/[^a-zA-Z0-9_-]/g, '_');
+            const sId = (studentObj.student_id || ('ID_' + (studentObj.id || ''))).replace(/[^a-zA-Z0-9_-]/g, '_');
+            const term = (report.term || 'Report').replace(/[^a-zA-Z0-9_-]/g, '_');
+            const fileName = `${cleanName}_${sId}_${term}_AI_Report.pdf`;
+
+            showToast('Generating PDF file, please wait...', 'info');
+
+            const loaded = await ensureHtml2PdfLoaded();
+            if (loaded && typeof html2pdf !== 'undefined') {
+                const container = document.createElement('div');
+                container.style.position = 'fixed';
+                container.style.left = '0';
+                container.style.top = '0';
+                container.style.width = '760px';
+                container.style.zIndex = '-9999';
+                container.style.opacity = '1';
+                container.style.pointerEvents = 'none';
+                container.style.background = '#ffffff';
+                container.innerHTML = generateAiReportHtml(report, studentObj);
+                document.body.appendChild(container);
+
+                const elementToConvert = container.firstElementChild || container;
+
+                const opt = {
+                    margin:       [10, 10, 10, 10],
+                    filename:     fileName,
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true, letterRendering: true, scrollY: 0, scrollX: 0 },
+                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                try {
+                    await html2pdf().set(opt).from(elementToConvert).save();
+                    showToast('PDF file downloaded successfully!', 'success');
+                } catch (err) {
+                    console.error('html2pdf generation error:', err);
+                    showToast('Direct download had an issue, opening print preview...', 'warning');
+                    printAiPerformanceReport();
+                } finally {
+                    if (container && container.parentNode) {
+                        container.parentNode.removeChild(container);
+                    }
+                }
+            } else {
+                showToast('PDF library unavailable, opening printable preview...', 'warning');
+                printAiPerformanceReport();
+            }
+        }
+
+        function printAiPerformanceReport() {
+            if (!currentAiActiveReport) {
+                showToast('No active report to print.', 'error');
+                return;
+            }
+            const report = currentAiActiveReport;
+            const studentObj = currentAiPerfStudent || {};
+            const sName = studentObj.name || 'Student';
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>AI Academic Performance Report - ${sName}</title>
+                    <style>
+                        @page { size: A4 portrait; margin: 10mm; }
+                        body { font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; margin: 0; padding: 0; font-size: 13px; line-height: 1.5; background: #fff; }
+                        @media print {
+                            body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${generateAiReportHtml(report, studentObj)}
+                    <script>
+                        window.onload = function() {
+                            window.print();
+                        };
+                    <\/script>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
         }
     </script>
 </body>

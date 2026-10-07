@@ -53,7 +53,8 @@ class AssignmentController extends Controller
 
             $assignmentsArr[] = [
                 'id'                => 'subject_' . $s->id,
-                'title'             => $s->subject_name . ' - Assignment',
+                'title'             => $s->topic ? $s->topic : ($s->subject_name . ' - Assignment'),
+                'topic'             => $s->topic,
                 'description'       => 'Class Assignment',
                 'due_date'          => $s->due_time,
                 'total_marks'       => 100,

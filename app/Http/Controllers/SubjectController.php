@@ -13,14 +13,9 @@ class SubjectController extends Controller
     // GET /api/subjects
     public function index(Request $request)
     {
-        $defaultSubjects = ['Mathematics', 'Science', 'English', 'Sinhala', 'Tamil', 'History', 'Geography', 'ICT', 'Commerce', 'Health & Physical Education', 'Art', 'Music', 'Dancing', 'Civic Education', 'Religion'];
-        foreach ($defaultSubjects as $subName) {
-            \App\Models\Subject::firstOrCreate([
-                'subject_name' => $subName,
-            ]);
-        }
-        
-        $query = Subject::whereNotNull('subject_name');
+        $query = Subject::whereNotNull('subject_name')
+            ->whereNotNull('grade')
+            ->where('grade', '!=', '');
 
         if ($request->has('grade')) {
             $query->where('grade', $request->input('grade'));
@@ -82,6 +77,7 @@ class SubjectController extends Controller
         $validator = Validator::make($request->all(), [
             'grade'         => 'required|string',
             'subject_name'  => 'required|string',
+            'topic'         => 'nullable|string',
             'pdf'           => 'nullable', // Can be file or string (URL)
             'assignment'    => 'nullable', // Can be file or string
             'due_time'      => 'nullable|string',
@@ -115,6 +111,7 @@ class SubjectController extends Controller
         $subject = Subject::create([
             'grade'        => $request->input('grade'),
             'subject_name' => $request->input('subject_name'),
+            'topic'        => $request->input('topic'),
             'pdf'          => $pdfPath,
             'assignment'   => $assignmentPath,
             'due_time'     => $request->input('due_time'),
@@ -155,15 +152,53 @@ class SubjectController extends Controller
     }
 
     // DELETE /api/subjects/{id}
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $subject = Subject::find($id);
         if (!$subject) {
             return response()->json(['success' => false, 'message' => 'Subject not found'], 404);
         }
 
+        $field = $request->query('field');
+        if ($field === 'pdf') {
+            if ($subject->pdf) {
+                $path = str_replace('/storage/', '', parse_url($subject->pdf, PHP_URL_PATH));
+                Storage::disk('public')->delete($path);
+            }
+            $subject->pdf = null;
+            if (empty($subject->assignment)) {
+                $subject->delete();
+            } else {
+                $subject->save();
+            }
+            return response()->json(['success' => true, 'message' => 'Material deleted successfully']);
+        }
+
+        if ($field === 'assignment') {
+            if ($subject->assignment) {
+                $path = str_replace('/storage/', '', parse_url($subject->assignment, PHP_URL_PATH));
+                Storage::disk('public')->delete($path);
+            }
+            $subject->assignment = null;
+            if (empty($subject->pdf)) {
+                $subject->delete();
+            } else {
+                $subject->save();
+            }
+            return response()->json(['success' => true, 'message' => 'Assignment deleted successfully']);
+        }
+
+        if ($subject->pdf) {
+            $path = str_replace('/storage/', '', parse_url($subject->pdf, PHP_URL_PATH));
+            Storage::disk('public')->delete($path);
+        }
+        if ($subject->assignment) {
+            $path = str_replace('/storage/', '', parse_url($subject->assignment, PHP_URL_PATH));
+            Storage::disk('public')->delete($path);
+        }
+
         $subject->delete();
 
-        return response()->json(['success' => true, 'message' => 'Subject deleted successfully']);
+        return response()->json(['success' => true, 'message' => 'Deleted successfully']);
     }
 }

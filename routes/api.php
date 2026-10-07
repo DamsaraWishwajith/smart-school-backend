@@ -155,5 +155,11 @@ Route::get('/timetables/grade/{gradeId}', [TimetableController::class, 'getTimet
     Route::get('/admin/salaries/monthly-status', [SalaryController::class, 'getMonthlyStatus']);
     Route::post('/admin/salaries/toggle', [SalaryController::class, 'toggleSalaryStatus']);
     Route::put('/admin/salaries/basic-salary', [SalaryController::class, 'updateBasicSalary']);
+
+    // AI Performance Reports
+    Route::get('/ai-performance/reports/{studentId}', [\App\Http\Controllers\AiPerformanceController::class, 'getStudentReports']);
+    Route::post('/ai-performance/generate', [\App\Http\Controllers\AiPerformanceController::class, 'generateReport']);
+    Route::get('/student/ai-performance', [\App\Http\Controllers\AiPerformanceController::class, 'getOwnReport']);
+    Route::post('/student/ai-performance/generate', [\App\Http\Controllers\AiPerformanceController::class, 'generateOwnReport']);
 });
 
